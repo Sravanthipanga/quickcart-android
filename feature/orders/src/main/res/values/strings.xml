@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_orders_title">Orders</string>
+    <string name="feature_orders_order_title">Order %1$s</string>
+    <string name="feature_orders_back">Back</string>
+    <string name="feature_orders_in_progress">In progress</string>
+    <string name="feature_orders_past">Past orders</string>
+    <plurals name="feature_orders_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <string name="feature_orders_reorder">Reorder</string>
+    <string name="feature_orders_reorder_all">Reorder these items</string>
+    <string name="feature_orders_empty_title">No orders yet</string>
+    <string name="feature_orders_empty_body">Orders you place will appear here, with live tracking while they\'re on the way.</string>
+    <string name="feature_orders_browse">Browse stores</string>
+    <string name="feature_orders_not_found">This order couldn\'t be found.</string>
+    <string name="feature_orders_status_placed">Order placed</string>
+    <string name="feature_orders_status_preparing">Preparing</string>
+    <string name="feature_orders_status_picked_up">Picked up</string>
+    <string name="feature_orders_status_on_the_way">On the way</string>
+    <string name="feature_orders_status_delivered">Delivered</string>
+    <string name="feature_orders_headline_placed">%1$s received your order</string>
+    <string name="feature_orders_headline_preparing">%1$s is preparing your order</string>
+    <string name="feature_orders_headline_picked_up">Your courier picked up your order</string>
+    <string name="feature_orders_headline_on_the_way">Your order is on the way</string>
+    <string name="feature_orders_headline_delivered">Delivered. Enjoy!</string>
+    <string name="feature_orders_arrive_by">Arriving by %1$s</string>
+    <string name="feature_orders_delivered_from">Your order from %1$s was delivered</string>
+    <string name="feature_orders_step_done">done</string>
+    <string name="feature_orders_step_current">in progress</string>
+    <string name="feature_orders_step_upcoming">upcoming</string>
+    <string name="feature_orders_offline">You\'re offline. Showing the last known status.</string>
+    <string name="feature_orders_subtotal">Subtotal</string>
+    <string name="feature_orders_delivery_fee">Delivery fee</string>
+    <string name="feature_orders_service_fee">Service fee</string>
+    <string name="feature_orders_total">Total</string>
+</resources>

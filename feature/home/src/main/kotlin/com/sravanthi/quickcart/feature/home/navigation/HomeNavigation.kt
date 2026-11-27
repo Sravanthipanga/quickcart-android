@@ -6,8 +6,8 @@ import com.sravanthi.quickcart.feature.home.HomeRoute
 
 const val HOME_ROUTE = "home"
 
-fun NavGraphBuilder.homeScreen(onStoreClick: (Long) -> Unit, onSearchClick: () -> Unit, onCartClick: () -> Unit) {
+fun NavGraphBuilder.homeScreen(onStoreClick: (Long) -> Unit, onSearchClick: () -> Unit, onCartClick: () -> Unit, onOrdersClick: () -> Unit) {
     composable(route = HOME_ROUTE) {
-        HomeRoute(onStoreClick = onStoreClick, onSearchClick = onSearchClick, onCartClick = onCartClick)
+        HomeRoute(onStoreClick = onStoreClick, onSearchClick = onSearchClick, onCartClick = onCartClick, onOrdersClick = onOrdersClick)
     }
 }

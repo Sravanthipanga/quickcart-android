@@ -13,7 +13,10 @@ import org.junit.Assert.fail
 import org.junit.Test
 import retrofit2.HttpException
 import java.io.File
+import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 
 class OrderApiTest {
 
@@ -27,7 +30,7 @@ class OrderApiTest {
                     loadData = { File("src/main/assets/marketplace.json").readText() },
                     json = json,
                     latencyMillis = 0,
-                    now = { serverTime },
+                    now = { ZonedDateTime.of(LocalDate.of(2026, 3, 10), serverTime, ZoneOffset.UTC) },
                 ),
             )
             .build(),
@@ -85,5 +88,25 @@ class OrderApiTest {
         expectError(400) { api.placeOrder(order(1060L to 1)) } // a FreshMart item
         expectError(400) { api.placeOrder(order(1001L to 0)) }
         expectError(404) { api.placeOrder(order(1001L to 1, storeId = 999)) }
+    }
+
+    @Test
+    fun `order status follows the server clock`() = runTest {
+        val order = api.placeOrder(order(1001L to 1)) // Bella Napoli: 25–35 min
+        assertEquals("PLACED", api.getOrderStatus(order.orderId).status)
+
+        serverTime = serverTime.plusMinutes(10)
+        assertEquals("PREPARING", api.getOrderStatus(order.orderId).status)
+
+        serverTime = serverTime.plusMinutes(15)
+        assertEquals("ON_THE_WAY", api.getOrderStatus(order.orderId).status)
+
+        serverTime = serverTime.plusMinutes(10)
+        assertEquals("DELIVERED", api.getOrderStatus(order.orderId).status)
+    }
+
+    @Test
+    fun `unknown orders are a 404`() = runTest {
+        expectError(404) { api.getOrderStatus("QC-9999") }
     }
 }

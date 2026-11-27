@@ -58,10 +58,11 @@ import com.sravanthi.quickcart.core.ui.RemoteImage
 internal fun CartRoute(
     onBack: () -> Unit,
     onBrowseStores: () -> Unit,
+    onTrackOrder: (String) -> Unit,
     viewModel: CartViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    CartScreen(uiState, onBack, onBrowseStores, viewModel::setQuantity, viewModel::placeOrder)
+    CartScreen(uiState, onBack, onBrowseStores, viewModel::setQuantity, viewModel::placeOrder, onTrackOrder)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,6 +73,7 @@ internal fun CartScreen(
     onBrowseStores: () -> Unit,
     onSetQuantity: (itemId: Long, quantity: Int) -> Unit,
     onPlaceOrder: () -> Unit,
+    onTrackOrder: (String) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -93,7 +95,12 @@ internal fun CartScreen(
                 CartUiState.Loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
                 CartUiState.Empty -> EmptyCart(onBrowseStores, Modifier.align(Alignment.Center))
                 is CartUiState.Ready -> CartContent(uiState, onSetQuantity)
-                is CartUiState.Placed -> OrderPlaced(uiState.confirmation, onBrowseStores, Modifier.align(Alignment.Center))
+                is CartUiState.Placed -> OrderPlaced(
+                    uiState.confirmation,
+                    onTrack = { onTrackOrder(uiState.confirmation.orderId) },
+                    onDone = onBrowseStores,
+                    modifier = Modifier.align(Alignment.Center),
+                )
             }
         }
     }
@@ -248,7 +255,7 @@ private fun EmptyCart(onBrowseStores: () -> Unit, modifier: Modifier = Modifier)
 }
 
 @Composable
-private fun OrderPlaced(confirmation: OrderConfirmation, onDone: () -> Unit, modifier: Modifier = Modifier) {
+private fun OrderPlaced(confirmation: OrderConfirmation, onTrack: () -> Unit, onDone: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier.padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Icon(Icons.Filled.CheckCircle, null, Modifier.size(80.dp), tint = MaterialTheme.colorScheme.tertiary)
         Spacer(Modifier.height(8.dp))
@@ -269,6 +276,7 @@ private fun OrderPlaced(confirmation: OrderConfirmation, onDone: () -> Unit, mod
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(16.dp))
+        Button(onClick = onTrack) { Text(stringResource(R.string.feature_cart_track_order)) }
         OutlinedButton(onClick = onDone) { Text(stringResource(R.string.feature_cart_back_to_stores)) }
     }
 }

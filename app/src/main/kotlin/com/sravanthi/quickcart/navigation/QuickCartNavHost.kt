@@ -9,6 +9,9 @@ import com.sravanthi.quickcart.feature.cart.navigation.cartScreen
 import com.sravanthi.quickcart.feature.cart.navigation.navigateToCart
 import com.sravanthi.quickcart.feature.home.navigation.HOME_ROUTE
 import com.sravanthi.quickcart.feature.home.navigation.homeScreen
+import com.sravanthi.quickcart.feature.orders.navigation.navigateToOrderTracking
+import com.sravanthi.quickcart.feature.orders.navigation.navigateToOrders
+import com.sravanthi.quickcart.feature.orders.navigation.ordersScreens
 import com.sravanthi.quickcart.feature.search.navigation.navigateToSearch
 import com.sravanthi.quickcart.feature.search.navigation.searchScreen
 import com.sravanthi.quickcart.feature.store.navigation.navigateToStore
@@ -24,6 +27,7 @@ fun QuickCartNavHost(
             onStoreClick = navController::navigateToStore,
             onSearchClick = navController::navigateToSearch,
             onCartClick = navController::navigateToCart,
+            onOrdersClick = navController::navigateToOrders,
         )
         searchScreen(
             onBack = navController::popBackStack,
@@ -36,6 +40,17 @@ fun QuickCartNavHost(
         cartScreen(
             onBack = navController::popBackStack,
             // After ordering (or from an empty cart), return to the store list.
+            onBrowseStores = { navController.popBackStack(HOME_ROUTE, inclusive = false) },
+            // Tracking replaces the confirmation, so Back from tracking returns to the stores.
+            onTrackOrder = { orderId ->
+                navController.popBackStack(HOME_ROUTE, inclusive = false)
+                navController.navigateToOrderTracking(orderId)
+            },
+        )
+        ordersScreens(
+            onBack = navController::popBackStack,
+            onOrderClick = navController::navigateToOrderTracking,
+            onOpenCart = navController::navigateToCart,
             onBrowseStores = { navController.popBackStack(HOME_ROUTE, inclusive = false) },
         )
     }

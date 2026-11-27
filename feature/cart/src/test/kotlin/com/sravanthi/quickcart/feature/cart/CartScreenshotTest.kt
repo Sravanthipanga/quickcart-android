@@ -39,7 +39,7 @@ class CartScreenshotTest {
     fun orderPlaced() = captureRoboImage("$SCREENSHOT_DIR/order_placed.png") {
         QuickCartTheme {
             CartScreen(
-                CartUiState.Placed(OrderConfirmation("QC-1042", store.name, pricing, 25, 35)),
+                CartUiState.Placed(OrderConfirmation("QC-1042", store.name, pricing, 25, 35, java.time.Instant.parse("2026-03-10T19:00:00Z"))),
                 onBack = {}, onBrowseStores = {}, onSetQuantity = { _, _ -> }, onPlaceOrder = {},
             )
         }

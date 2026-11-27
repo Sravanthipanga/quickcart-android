@@ -3,7 +3,9 @@ package com.sravanthi.quickcart.core.network.di
 import android.content.Context
 import com.sravanthi.quickcart.core.network.BuildConfig
 import com.sravanthi.quickcart.core.network.MarketplaceApi
+import com.sravanthi.quickcart.core.network.mock.FileOrderStore
 import com.sravanthi.quickcart.core.network.mock.MockMarketplaceInterceptor
+import java.io.File
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,6 +47,7 @@ object NetworkModule {
                         MockMarketplaceInterceptor(
                             loadData = { context.assets.open(MARKETPLACE_ASSET).bufferedReader().use { it.readText() } },
                             json = json,
+                            orders = FileOrderStore(File(context.filesDir, MOCK_ORDERS_FILE), json),
                         ),
                     )
                 }
@@ -64,4 +67,5 @@ object NetworkModule {
         .create(MarketplaceApi::class.java)
 
     private const val MARKETPLACE_ASSET = "marketplace.json"
+    private const val MOCK_ORDERS_FILE = "mock-server/orders.json"
 }

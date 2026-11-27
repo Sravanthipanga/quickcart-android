@@ -17,6 +17,7 @@ import java.io.IOException
 class TestMarketplace(
     /** The order server's clock; 19:00 is when every store in the data is open. */
     var serverTime: java.time.LocalTime = java.time.LocalTime.of(19, 0),
+    var serverDate: java.time.LocalDate = java.time.LocalDate.of(2026, 3, 10),
 ) {
     var offline = false
     var requests = 0
@@ -34,7 +35,7 @@ class TestMarketplace(
                     chain.proceed(chain.request())
                 },
             )
-            .addInterceptor(MockMarketplaceInterceptor({ File(MARKETPLACE).readText() }, json, latencyMillis = 0, now = { serverTime }))
+            .addInterceptor(MockMarketplaceInterceptor({ File(MARKETPLACE).readText() }, json, latencyMillis = 0, now = { java.time.ZonedDateTime.of(serverDate, serverTime, java.time.ZoneOffset.UTC) }))
             .build(),
         json = json,
     )

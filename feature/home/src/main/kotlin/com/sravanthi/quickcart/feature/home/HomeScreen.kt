@@ -3,6 +3,7 @@ package com.sravanthi.quickcart.feature.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.BadgedBox
@@ -67,6 +68,7 @@ internal fun HomeRoute(
     onStoreClick: (Long) -> Unit,
     onSearchClick: () -> Unit,
     onCartClick: () -> Unit,
+    onOrdersClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val selectedType by viewModel.selectedType.collectAsStateWithLifecycle()
@@ -74,6 +76,7 @@ internal fun HomeRoute(
     HomeScreen(
         cartItemCount = cartItemCount,
         onCartClick = onCartClick,
+        onOrdersClick = onOrdersClick,
         stores = viewModel.stores.collectAsLazyPagingItems(),
         selectedType = selectedType,
         now = viewModel.currentTime(),
@@ -99,6 +102,7 @@ internal fun HomeScreen(
     stores: LazyPagingItems<Store>,
     cartItemCount: Int = 0,
     onCartClick: () -> Unit = {},
+    onOrdersClick: () -> Unit = {},
     selectedType: StoreType?,
     now: LocalTime,
     onTypeSelected: (StoreType?) -> Unit,
@@ -135,7 +139,12 @@ internal fun HomeScreen(
                         )
                     }
                 },
-                actions = { CartButton(cartItemCount, onCartClick) },
+                actions = {
+                    IconButton(onClick = onOrdersClick) {
+                        Icon(Icons.Outlined.ReceiptLong, stringResource(R.string.feature_home_orders))
+                    }
+                    CartButton(cartItemCount, onCartClick)
+                },
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

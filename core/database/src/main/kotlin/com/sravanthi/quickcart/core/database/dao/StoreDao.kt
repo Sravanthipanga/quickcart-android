@@ -17,6 +17,9 @@ interface StoreDao {
     @Query("SELECT * FROM stores WHERE id = :id")
     fun observeById(id: Long): Flow<StoreEntity?>
 
+    @Query("SELECT imageUrl FROM stores WHERE id = :id")
+    suspend fun imageUrlOf(id: Long): String?
+
     @Query("SELECT position FROM stores WHERE id = :id")
     suspend fun positionOf(id: Long): Int?
 

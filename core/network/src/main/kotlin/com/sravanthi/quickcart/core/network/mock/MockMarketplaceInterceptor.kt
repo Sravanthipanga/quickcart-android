@@ -1,11 +1,13 @@
 package com.sravanthi.quickcart.core.network.mock
 
+import com.sravanthi.quickcart.core.model.orderStatusAt
 import com.sravanthi.quickcart.core.model.priceOrder
 import com.sravanthi.quickcart.core.network.model.NetworkError
 import com.sravanthi.quickcart.core.network.model.NetworkMenu
 import com.sravanthi.quickcart.core.network.model.NetworkMenuItem
 import com.sravanthi.quickcart.core.network.model.NetworkOrderConfirmation
 import com.sravanthi.quickcart.core.network.model.NetworkOrderRequest
+import com.sravanthi.quickcart.core.network.model.NetworkOrderStatus
 import com.sravanthi.quickcart.core.network.model.NetworkSearchHit
 import com.sravanthi.quickcart.core.network.model.NetworkSearchResults
 import com.sravanthi.quickcart.core.network.model.NetworkStore
@@ -21,8 +23,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.Buffer
-import java.time.LocalTime
-import java.util.concurrent.atomic.AtomicInteger
+import java.time.ZonedDateTime
 
 /**
  * A mock marketplace server inside the app: answers [com.sravanthi.quickcart.core.network.MarketplaceApi]
@@ -34,15 +35,16 @@ class MockMarketplaceInterceptor(
     private val loadData: () -> String,
     private val json: Json,
     private val latencyMillis: Long = 300,
-    /** The server's clock, for opening hours. */
-    private val now: () -> LocalTime = { LocalTime.now() },
+    /** The server's clock, for opening hours and order progress. */
+    private val now: () -> ZonedDateTime = { ZonedDateTime.now() },
+    /** Where the server keeps placed orders. */
+    private val orders: MockOrderStore = InMemoryOrderStore(),
 ) : Interceptor {
 
     @Serializable
     private data class MarketplaceData(val stores: List<NetworkStore>, val items: List<NetworkMenuItem>)
 
     private val data: MarketplaceData by lazy { json.decodeFromString(loadData()) }
-    private val nextOrderNumber = AtomicInteger(FIRST_ORDER_NUMBER)
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -59,6 +61,7 @@ class MockMarketplaceInterceptor(
                 ?: notFound(request)
             path == listOf("search") -> respond(request, json.encodeToString(search(request.url.queryParameter("q").orEmpty())))
             path == listOf("orders") && request.method == "POST" -> placeOrder(request)
+            path.size == 2 && path[0] == "orders" -> orderStatus(request, path[1])
             else -> notFound(request)
         }
     }
@@ -94,7 +97,8 @@ class MockMarketplaceInterceptor(
             ?: return error(request, 400, "Invalid order")
         val store = data.stores.firstOrNull { it.id == order.storeId } ?: return error(request, 404, "Store not found")
         val storeModel = store.asExternalModel()
-        if (!storeModel.isOpenAt(now())) return error(request, 409, "${store.name} is closed right now")
+        val placedAt = now()
+        if (!storeModel.isOpenAt(placedAt.toLocalTime())) return error(request, 409, "${store.name} is closed right now")
         if (order.lines.isEmpty() || order.lines.any { it.quantity <= 0 }) return error(request, 400, "Invalid order")
 
         val subtotal = order.lines.sumOf { line ->
@@ -105,8 +109,13 @@ class MockMarketplaceInterceptor(
         val pricing = priceOrder(subtotal, storeModel)
         if (!pricing.meetsMinimum) return error(request, 422, "Orders from ${store.name} need a minimum subtotal")
 
+        val orderId = synchronized(orders) {
+            "$ORDER_PREFIX${orders.nextOrderNumber(FIRST_ORDER_NUMBER)}".also { id ->
+                orders.save(StoredOrder(id, placedAt.toInstant().toEpochMilli(), store.deliveryMaxMinutes))
+            }
+        }
         val confirmation = NetworkOrderConfirmation(
-            orderId = "QC-${nextOrderNumber.getAndIncrement()}",
+            orderId = orderId,
             storeName = store.name,
             subtotalCents = pricing.subtotalCents,
             deliveryFeeCents = pricing.deliveryFeeCents,
@@ -114,8 +123,20 @@ class MockMarketplaceInterceptor(
             minimumOrderCents = pricing.minimumOrderCents,
             etaMinMinutes = store.deliveryMinMinutes,
             etaMaxMinutes = store.deliveryMaxMinutes,
+            placedAtEpochMillis = placedAt.toInstant().toEpochMilli(),
         )
         return respond(request, json.encodeToString(confirmation), code = 201)
+    }
+
+    /** Status follows the shared rule in `orderStatusAt`, using the server's clock. */
+    private fun orderStatus(request: Request, orderId: String): Response {
+        val order = orders.get(orderId) ?: return error(request, 404, "Order not found")
+        val status = orderStatusAt(
+            placedAt = java.time.Instant.ofEpochMilli(order.placedAtEpochMillis),
+            etaMaxMinutes = order.etaMaxMinutes,
+            now = now().toInstant(),
+        )
+        return respond(request, json.encodeToString(NetworkOrderStatus(orderId, status.name)))
     }
 
     private fun error(request: Request, code: Int, message: String) =
