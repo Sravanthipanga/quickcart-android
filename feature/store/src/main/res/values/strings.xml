@@ -9,4 +9,12 @@
     <string name="feature_store_retry">Retry</string>
     <string name="feature_store_error_title">Can\'t load this store</string>
     <string name="feature_store_error_body">Check your connection and try again.</string>
+    <plurals name="feature_store_view_cart">
+        <item quantity="one">View cart · %1$d item</item>
+        <item quantity="other">View cart · %1$d items</item>
+    </plurals>
+    <string name="feature_store_switch_title">Start a new cart?</string>
+    <string name="feature_store_switch_body">Your cart has items from %1$s. Start a new cart to order from %2$s instead.</string>
+    <string name="feature_store_switch_confirm">New cart</string>
+    <string name="feature_store_switch_cancel">Keep my cart</string>
 </resources>

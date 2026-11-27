@@ -2,6 +2,8 @@ package com.sravanthi.quickcart.feature.store
 
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.sravanthi.quickcart.core.designsystem.theme.QuickCartTheme
+import com.sravanthi.quickcart.core.model.Cart
+import com.sravanthi.quickcart.core.model.CartLine
 import com.sravanthi.quickcart.core.model.bySection
 import com.sravanthi.quickcart.core.testing.PHONE_QUALIFIERS
 import com.sravanthi.quickcart.core.testing.SCREENSHOT_DIR
@@ -21,9 +23,12 @@ class StoreScreenshotTest {
 
     @Test
     fun restaurant() = captureRoboImage("$SCREENSHOT_DIR/store_restaurant.png") {
+        val store = sampleStores.first { it.id == 1L }
+        // Two pizzas already in the cart: shows the stepper and the View cart bar.
+        val cart = Cart(store, listOf(CartLine(sampleMenu[0], 2)))
         QuickCartTheme {
             StoreScreen(
-                StoreUiState.Ready(sampleStores.first { it.id == 1L }, sampleMenu.bySection(), isOpen = true, isRefreshing = false, isOffline = false),
+                StoreUiState.Ready(store, sampleMenu.bySection(), isOpen = true, isRefreshing = false, isOffline = false, cart = cart),
                 onBack = {},
                 onRetry = {},
             )

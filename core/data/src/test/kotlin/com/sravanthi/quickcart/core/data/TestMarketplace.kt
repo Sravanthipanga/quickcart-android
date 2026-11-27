@@ -14,12 +14,15 @@ import java.io.IOException
  * The real API client and mock marketplace with the bundled data, plus an in-memory Room database.
  * Set [offline] to simulate airplane mode.
  */
-class TestMarketplace {
+class TestMarketplace(
+    /** The order server's clock; 19:00 is when every store in the data is open. */
+    var serverTime: java.time.LocalTime = java.time.LocalTime.of(19, 0),
+) {
     var offline = false
     var requests = 0
         private set
 
-    private val json = NetworkModule.provideJson()
+    val json = NetworkModule.provideJson()
 
     val api = NetworkModule.createApi(
         baseUrl = "https://api.quickcart.example/v1/",
@@ -31,7 +34,7 @@ class TestMarketplace {
                     chain.proceed(chain.request())
                 },
             )
-            .addInterceptor(MockMarketplaceInterceptor({ File(MARKETPLACE).readText() }, json, latencyMillis = 0))
+            .addInterceptor(MockMarketplaceInterceptor({ File(MARKETPLACE).readText() }, json, latencyMillis = 0, now = { serverTime }))
             .build(),
         json = json,
     )

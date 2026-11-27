@@ -1,6 +1,12 @@
 package com.sravanthi.quickcart.feature.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Badge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -60,10 +66,14 @@ import java.time.LocalTime
 internal fun HomeRoute(
     onStoreClick: (Long) -> Unit,
     onSearchClick: () -> Unit,
+    onCartClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val selectedType by viewModel.selectedType.collectAsStateWithLifecycle()
+    val cartItemCount by viewModel.cartItemCount.collectAsStateWithLifecycle()
     HomeScreen(
+        cartItemCount = cartItemCount,
+        onCartClick = onCartClick,
         stores = viewModel.stores.collectAsLazyPagingItems(),
         selectedType = selectedType,
         now = viewModel.currentTime(),
@@ -87,6 +97,8 @@ private val filters: List<Pair<StoreType?, Int>> = listOf(
 @Composable
 internal fun HomeScreen(
     stores: LazyPagingItems<Store>,
+    cartItemCount: Int = 0,
+    onCartClick: () -> Unit = {},
     selectedType: StoreType?,
     now: LocalTime,
     onTypeSelected: (StoreType?) -> Unit,
@@ -123,6 +135,7 @@ internal fun HomeScreen(
                         )
                     }
                 },
+                actions = { CartButton(cartItemCount, onCartClick) },
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -182,6 +195,16 @@ internal fun HomeScreen(
                     is LoadState.NotLoading -> Unit
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun CartButton(count: Int, onClick: () -> Unit) {
+    val description = pluralStringResource(R.plurals.feature_home_cart, count, count)
+    IconButton(onClick = onClick, modifier = Modifier.semantics { contentDescription = description }) {
+        BadgedBox(badge = { if (count > 0) Badge { Text(count.toString()) } }) {
+            Icon(Icons.Outlined.ShoppingCart, contentDescription = null)
         }
     }
 }

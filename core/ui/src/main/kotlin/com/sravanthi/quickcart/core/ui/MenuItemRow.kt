@@ -2,6 +2,7 @@ package com.sravanthi.quickcart.core.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +36,10 @@ fun MenuItemRow(
     modifier: Modifier = Modifier,
     storeName: String? = null,
     onClick: (() -> Unit)? = null,
+    /** When set, shows an Add button or quantity stepper on the photo. */
+    quantity: Int? = null,
+    onIncrease: () -> Unit = {},
+    onDecrease: () -> Unit = {},
 ) {
     val price = formatPrice(item.salePriceCents) + (item.unit?.let { " · $it" } ?: "")
     Row(
@@ -79,14 +84,26 @@ fun MenuItemRow(
                 }
             }
         }
-        RemoteImage(
-            url = item.imageUrl,
-            placeholder = Icons.Outlined.Fastfood,
-            placeholderSize = 32.dp,
-            modifier = Modifier
-                .size(88.dp)
-                .clip(RoundedCornerShape(12.dp)),
-        )
+        Box(Modifier.size(width = 104.dp, height = 104.dp)) {
+            RemoteImage(
+                url = item.imageUrl,
+                placeholder = Icons.Outlined.Fastfood,
+                placeholderSize = 32.dp,
+                modifier = Modifier
+                    .size(88.dp)
+                    .align(Alignment.TopCenter)
+                    .clip(RoundedCornerShape(12.dp)),
+            )
+            if (quantity != null) {
+                QuantityStepper(
+                    quantity = quantity,
+                    itemName = item.name,
+                    onIncrease = onIncrease,
+                    onDecrease = onDecrease,
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                )
+            }
+        }
     }
 }
 

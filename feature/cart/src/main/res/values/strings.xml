@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_cart_title">Your cart</string>
+    <string name="feature_cart_back">Back</string>
+    <string name="feature_cart_subtotal">Subtotal</string>
+    <string name="feature_cart_delivery_fee">Delivery fee</string>
+    <string name="feature_cart_service_fee">Service fee</string>
+    <string name="feature_cart_total">Total</string>
+    <string name="feature_cart_free">Free</string>
+    <string name="feature_cart_below_minimum">Add %1$s more to reach this store\'s %2$s minimum.</string>
+    <string name="feature_cart_store_closed">This store is closed right now. You can order once it opens.</string>
+    <string name="feature_cart_offline">You\'re offline. Your cart is saved, so try again when you\'re connected.</string>
+    <string name="feature_cart_demo_note">Demo checkout: orders are placed with QuickCart\'s sample marketplace and no payment is taken.</string>
+    <string name="feature_cart_place_order">Place order · %1$s</string>
+    <string name="feature_cart_empty_title">Your cart is empty</string>
+    <string name="feature_cart_empty_body">Add dishes or groceries from any store and they\'ll appear here.</string>
+    <string name="feature_cart_browse">Browse stores</string>
+    <string name="feature_cart_placed_title">Order placed!</string>
+    <string name="feature_cart_placed_order">Order %1$s from %2$s</string>
+    <string name="feature_cart_placed_eta">Arriving in %1$d–%2$d min</string>
+    <string name="feature_cart_placed_total">Order total: %1$s</string>
+    <string name="feature_cart_back_to_stores">Back to stores</string>
+</resources>
