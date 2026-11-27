@@ -34,4 +34,14 @@ class OrdersScreenshotTest {
             TrackOrderScreen(TrackOrderUiState.Ready(orders.first(), isOffline = false), onBack = {}, onReorder = {})
         }
     }
+
+    @Test
+    fun trackingAsksForNotifications() = captureRoboImage("$SCREENSHOT_DIR/order_tracking_notifications.png") {
+        QuickCartTheme {
+            TrackOrderScreen(
+                TrackOrderUiState.Ready(orders.first().copy(status = com.sravanthi.quickcart.core.model.OrderStatus.PREPARING), isOffline = false),
+                onBack = {}, onReorder = {}, showNotificationPrompt = true,
+            )
+        }
+    }
 }

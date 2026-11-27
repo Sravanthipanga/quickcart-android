@@ -31,6 +31,8 @@ QuickCart is an offline-first Android marketplace for food delivery and grocerie
 - **Cart and checkout:** add dishes or groceries with quantity steppers; the cart is saved on the phone. One store per order, with a "Start a new cart?" prompt when switching stores. Checkout shows subtotal, delivery and service fees, enforces the store's minimum order and opening hours, and confirms with an order number and arrival time.
 - **Live order tracking:** a status timeline (placed, preparing, picked up, on the way, delivered) with the arrival time, updated every 15 seconds while the screen is open.
 - **Order history and reorder:** in-progress and past orders with their items and totals, saved on the phone. **Reorder** puts a past order's items back in the cart in one tap.
+- **Order notifications:** "being prepared", "picked up", "on the way" and "delivered" alerts, even with the app closed. Tapping one opens that order's tracking screen. On Android 13+ the app asks for permission on the tracking screen, where the reason is clear, never at launch.
+- **Deep links:** `quickcart://orders`, `quickcart://orders/{orderId}` and `quickcart://store/{storeId}` open the order history, an order's tracking screen or a store.
 - **Works offline:** browsed stores, menus and search keep working without a connection, with a clear "you're offline" notice and Retry.
 
 ## How it works
@@ -67,11 +69,12 @@ flowchart LR
 1. When the server accepts an order, the order and its lines are saved to Room and the cart is cleared **in one transaction**, so an order is never lost and the cart never half-cleared.
 2. The tracking screen reads the order from Room and asks the server for its status every 15 seconds, **only while the screen is visible**. Polling stops for good once the order is delivered.
 3. Offline, the last known status stays on screen with a note, and the next successful check catches up.
-4. The mock server works out an order's status from how much of its delivery window has passed, using the shared `orderStatusAt` rule in `:core:model`. Orders are stored in a file, so tracking keeps working after the app restarts.
+4. **In the background**, a WorkManager job checks active orders once a minute (only with a network connection) and posts a notification when a status changes. It keeps running if the app is closed or the phone restarts, and stops as soon as no order is active. A production backend would push these updates instead (for example with Firebase Cloud Messaging); the demo server can't push, so the app checks.
+5. The mock server works out an order's status from how much of its delivery window has passed, using the shared `orderStatusAt` rule in `:core:model`. Orders are stored in a file, so tracking keeps working after the app restarts.
 
 ## Tech stack
 
-Kotlin · Jetpack Compose (Material 3) · Coroutines & Flow · Hilt · Room · Paging 3 (RemoteMediator) · Retrofit + OkHttp · kotlinx.serialization · Coil · Navigation Compose · JUnit, Turbine, Robolectric · Roborazzi screenshots · GitHub Actions
+Kotlin · Jetpack Compose (Material 3) · Coroutines & Flow · Hilt · Room · Paging 3 (RemoteMediator) · Retrofit + OkHttp · kotlinx.serialization · Coil · Navigation Compose · WorkManager · Notifications & deep links · JUnit, Turbine, Robolectric · Roborazzi screenshots · GitHub Actions
 
 ## Architecture
 
@@ -82,23 +85,26 @@ Kotlin · Jetpack Compose (Material 3) · Coroutines & Flow · Hilt · Room · P
 | `:feature:store` | Store header, open/closed status and the menu or aisles by section |
 | `:feature:cart` | Cart, price breakdown, minimum-order and opening-hours checks, place order, confirmation |
 | `:feature:orders` | Order history, live tracking with polling, and reorder |
+| `:core:notifications` | Order notifications, the background order-update worker and its scheduler |
 | `:feature:search` | Debounced search across stores, dishes and groceries |
 | `:core:ui` | Shared composables: store card, menu item row, remote image |
 | `:core:data` | Repositories and the paging `RemoteMediator`, with offline fallbacks |
 | `:core:network` | Retrofit API, DTOs, and the mock marketplace server with its bundled data |
 | `:core:database` | Room tables for stores, menu items, paging keys and the cart and orders, with tested migrations |
-| `:core:model` | Pure Kotlin models: stores, opening hours, menu items, cart, order pricing, order status, money |
+| `:core:model` | Pure Kotlin models: stores, opening hours, menu items, cart, order pricing, order status, money, deep links |
 | `:core:designsystem` | QuickCart Material 3 theme |
 | `:core:testing` | Test rules, fakes and sample data |
 | `build-logic` | Gradle convention plugins shared by every module |
 
 ## Testing
 
-100 tests run on every pull request:
+117 tests run on every pull request:
 
 - **Integration tests against the real bundled marketplace.** The repositories and paging run through the actual Retrofit client and mock server, with a real in-memory Room database and an "airplane mode" switch to test offline behaviour.
 - **Checkout against the mock server:** server-side pricing, minimum order, closed stores, unknown items, and the cart surviving rejection and offline failures.
 - **Order tracking:** status progress over time from the mock server, offline polls keeping the last status, reorder, and virtual-time tests proving polling runs every 15 seconds and stops after delivery.
+- **Notifications and background work:** a notification only when the status moves, deep link in the tap action, no notification without permission, background checks scheduled once, continuing while an order is active and stopping after delivery (WorkManager test driver).
+- **Deep links** resolve to the right screens and arguments; malformed links are ignored.
 - **Database migration tests** that upgrade real v1 and v2 databases and check the data survives.
 - **Data checks.** The bundled data is validated: unique IDs, every item belongs to a store, valid prices, hours and images.
 - **ViewModel tests.** These include a virtual-time test proving that fast typing triggers only one search.
@@ -115,6 +121,12 @@ Requires JDK 17 and the Android SDK (compiles against API 36, targets API 35).
 ./gradlew recordRoborazziDebug # regenerate screenshots in docs/screenshots
 ```
 
+Try a deep link on a device or emulator with the debug build installed:
+
+```bash
+adb shell am start -a android.intent.action.VIEW -d "quickcart://store/8"
+```
+
 Dish names and photos and grocery products come from the public [DummyJSON](https://dummyjson.com) recipes and groceries data; store details and restaurant prices are sample data.
 
 ## Roadmap
@@ -123,7 +135,7 @@ Dish names and photos and grocery products come from the public [DummyJSON](http
 - [x] Food and grocery marketplace: stores, menus, aisles, search
 - [x] Cart and checkout (minimum order, delivery and service fees, one store per order)
 - [x] Order history and live order tracking
-- [ ] Deep links and notifications
+- [x] Deep links and notifications
 - [ ] Performance: baseline profile and startup benchmarks
 - [ ] Play Store release
 

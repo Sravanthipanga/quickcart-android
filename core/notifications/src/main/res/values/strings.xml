@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_notifications_channel_name">Order updates</string>
+    <string name="core_notifications_channel_description">When your order is being prepared, picked up, on the way and delivered</string>
+    <string name="core_notifications_preparing">%1$s is preparing your order</string>
+    <string name="core_notifications_picked_up">Your order has been picked up</string>
+    <string name="core_notifications_on_the_way">Your order is on the way</string>
+    <string name="core_notifications_delivered">Your order has been delivered</string>
+    <string name="core_notifications_placed">Order placed with %1$s</string>
+    <string name="core_notifications_arrive_by">Order %1$s · Arriving by %2$s</string>
+    <string name="core_notifications_enjoy">Order %1$s from %2$s. Enjoy!</string>
+</resources>

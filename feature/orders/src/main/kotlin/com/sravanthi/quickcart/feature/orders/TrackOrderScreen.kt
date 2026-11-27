@@ -1,5 +1,10 @@
 package com.sravanthi.quickcart.feature.orders
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.CloudOff
+import androidx.compose.material.icons.outlined.NotificationsActive
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
@@ -32,19 +38,26 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sravanthi.quickcart.core.model.Order
@@ -57,12 +70,55 @@ import java.time.format.FormatStyle
 @Composable
 internal fun TrackOrderRoute(onBack: () -> Unit, onOpenCart: () -> Unit, viewModel: TrackOrderViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    TrackOrderScreen(uiState, onBack, onReorder = { viewModel.reorder(onOpenCart) })
+    val notifications = rememberNotificationPermission()
+    val orderIsActive = (uiState as? TrackOrderUiState.Ready)?.order?.isActive == true
+    TrackOrderScreen(
+        uiState,
+        onBack,
+        onReorder = { viewModel.reorder(onOpenCart) },
+        showNotificationPrompt = orderIsActive && notifications.shouldAsk,
+        onEnableNotifications = notifications.request,
+        onDismissNotificationPrompt = notifications.dismiss,
+    )
+}
+
+/**
+ * Android 13+ needs permission to post notifications. QuickCart asks only here, while an order is
+ * on its way and the reason is obvious, and stops asking for this visit after "Not now" or an answer.
+ */
+private class NotificationPermission(val shouldAsk: Boolean, val request: () -> Unit, val dismiss: () -> Unit)
+
+@Composable
+private fun rememberNotificationPermission(): NotificationPermission {
+    val context = LocalContext.current
+    var granted by remember {
+        mutableStateOf(
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED,
+        )
+    }
+    var dismissed by rememberSaveable { mutableStateOf(false) }
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
+        granted = result
+        dismissed = true
+    }
+    return NotificationPermission(
+        shouldAsk = !granted && !dismissed,
+        request = { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) launcher.launch(Manifest.permission.POST_NOTIFICATIONS) },
+        dismiss = { dismissed = true },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TrackOrderScreen(uiState: TrackOrderUiState, onBack: () -> Unit, onReorder: () -> Unit) {
+internal fun TrackOrderScreen(
+    uiState: TrackOrderUiState,
+    onBack: () -> Unit,
+    onReorder: () -> Unit,
+    showNotificationPrompt: Boolean = false,
+    onEnableNotifications: () -> Unit = {},
+    onDismissNotificationPrompt: () -> Unit = {},
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -96,7 +152,12 @@ internal fun TrackOrderScreen(uiState: TrackOrderUiState, onBack: () -> Unit, on
                     stringResource(R.string.feature_orders_not_found),
                     modifier = Modifier.align(Alignment.Center).padding(32.dp),
                 )
-                is TrackOrderUiState.Ready -> TrackOrderContent(uiState)
+                is TrackOrderUiState.Ready -> TrackOrderContent(
+                    uiState,
+                    showNotificationPrompt,
+                    onEnableNotifications,
+                    onDismissNotificationPrompt,
+                )
             }
         }
     }
@@ -105,11 +166,17 @@ internal fun TrackOrderScreen(uiState: TrackOrderUiState, onBack: () -> Unit, on
 private val timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
 
 @Composable
-private fun TrackOrderContent(state: TrackOrderUiState.Ready) {
+private fun TrackOrderContent(
+    state: TrackOrderUiState.Ready,
+    showNotificationPrompt: Boolean,
+    onEnableNotifications: () -> Unit,
+    onDismissNotificationPrompt: () -> Unit,
+) {
     val order = state.order
     LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item { StatusHeader(order) }
         if (state.isOffline && order.isActive) item { OfflineNote() }
+        if (showNotificationPrompt) item { NotificationPrompt(onEnableNotifications, onDismissNotificationPrompt) }
         item { Timeline(order.status) }
         item { OrderDetails(order) }
     }
@@ -190,6 +257,31 @@ private fun StepDot(done: Boolean, isCurrent: Boolean) {
     ) {
         if (done) Icon(Icons.Filled.Check, null, Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onTertiary)
         if (isCurrent) Box(Modifier.size(8.dp).background(MaterialTheme.colorScheme.onPrimary, CircleShape))
+    }
+}
+
+@Composable
+private fun NotificationPrompt(onEnable: () -> Unit, onDismiss: () -> Unit) {
+    Surface(color = MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(12.dp), modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(start = 16.dp, top = 16.dp, end = 8.dp, bottom = 4.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Outlined.NotificationsActive, null, Modifier.size(20.dp))
+                Text(
+                    stringResource(R.string.feature_orders_notify_title),
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
+            Text(
+                stringResource(R.string.feature_orders_notify_body),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 4.dp, end = 8.dp),
+            )
+            Row(Modifier.align(Alignment.End)) {
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.feature_orders_notify_not_now)) }
+                TextButton(onClick = onEnable) { Text(stringResource(R.string.feature_orders_notify_enable)) }
+            }
+        }
     }
 }
 
