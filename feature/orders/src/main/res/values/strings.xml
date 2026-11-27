@@ -35,4 +35,8 @@
     <string name="feature_orders_delivery_fee">Delivery fee</string>
     <string name="feature_orders_service_fee">Service fee</string>
     <string name="feature_orders_total">Total</string>
+    <string name="feature_orders_notify_title">Get updates on this order</string>
+    <string name="feature_orders_notify_body">We\'ll let you know when it\'s picked up and when it arrives, even with the app closed.</string>
+    <string name="feature_orders_notify_enable">Turn on</string>
+    <string name="feature_orders_notify_not_now">Not now</string>
 </resources>
