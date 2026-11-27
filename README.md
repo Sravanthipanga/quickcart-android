@@ -72,6 +72,20 @@ flowchart LR
 4. **In the background**, a WorkManager job checks active orders once a minute (only with a network connection) and posts a notification when a status changes. It keeps running if the app is closed or the phone restarts, and stops as soon as no order is active. A production backend would push these updates instead (for example with Firebase Cloud Messaging); the demo server can't push, so the app checks.
 5. The mock server works out an order's status from how much of its delivery window has passed, using the shared `orderStatusAt` rule in `:core:model`. Orders are stored in a file, so tracking keeps working after the app restarts.
 
+## Performance
+
+- **Baseline profile.** The app ships a baseline profile (via ProfileInstaller) recorded from the real journeys: cold start, scrolling the store list, opening a store's menu and searching. Android compiles that code ahead of time at install instead of interpreting it on first use, and the startup profile also lays out the DEX files so startup code sits together. It is generated on an emulator by the **Performance** workflow and committed to the repo.
+- **Benchmarks.** `:baselineprofile` measures cold startup (until the store list is on screen) and store-list scrolling frame times, each with and without the profile.
+- **Compose stability.** A [stability config](compose-stability.conf) marks the immutable domain models, `java.time` values and read-only collections as stable. The Compose compiler reports went from **21 unstable composable parameters to 0**, so screens skip recomposing when the database re-emits equal data.
+
+<!-- BENCHMARK_RESULTS -->
+
+```bash
+./gradlew :app:generateReleaseBaselineProfile                  # regenerate the profile (needs an emulator or device)
+./gradlew :baselineprofile:pixel6Api34BenchmarkReleaseAndroidTest # run the benchmarks on a Gradle Managed Device
+./gradlew assembleRelease -Pquickcart.composeReports=true       # Compose stability reports in build/compose-reports
+```
+
 ## Tech stack
 
 Kotlin · Jetpack Compose (Material 3) · Coroutines & Flow · Hilt · Room · Paging 3 (RemoteMediator) · Retrofit + OkHttp · kotlinx.serialization · Coil · Navigation Compose · WorkManager · Notifications & deep links · JUnit, Turbine, Robolectric · Roborazzi screenshots · GitHub Actions
@@ -80,6 +94,7 @@ Kotlin · Jetpack Compose (Material 3) · Coroutines & Flow · Hilt · Room · P
 
 | Module | Responsibility |
 |---|---|
+| `:baselineprofile` | Baseline profile generator and Macrobenchmark startup and scroll benchmarks (UiAutomator journeys) |
 | `:app` | Application, activity, navigation, Hilt entry point |
 | `:feature:home` | Store list with search entry, type filters, paging, loading, error and offline states |
 | `:feature:store` | Store header, open/closed status and the menu or aisles by section |
@@ -136,7 +151,7 @@ Dish names and photos and grocery products come from the public [DummyJSON](http
 - [x] Cart and checkout (minimum order, delivery and service fees, one store per order)
 - [x] Order history and live order tracking
 - [x] Deep links and notifications
-- [ ] Performance: baseline profile and startup benchmarks
+- [x] Performance: baseline profile and startup benchmarks
 - [ ] Play Store release
 
 ## License
