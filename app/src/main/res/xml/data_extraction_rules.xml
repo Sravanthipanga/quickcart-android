@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The product cache can always be re-downloaded, so it is not backed up. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="database" path="quickcart.db" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="database" path="quickcart.db" />
+    </device-transfer>
+</data-extraction-rules>

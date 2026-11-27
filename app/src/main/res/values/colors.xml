@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="quickcart_primary">#FFA8400F</color>
+    <color name="quickcart_background">#FFFFFBFF</color>
+    <color name="quickcart_background_dark">#FF1A110E</color>
+</resources>
