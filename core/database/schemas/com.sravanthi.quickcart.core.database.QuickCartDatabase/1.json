@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "da6410f960b461aea7f1872a46cd4861",
+    "identityHash": "490a01533d96bb675ffba2a74c67e01e",
     "entities": [
       {
-        "tableName": "products",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT NOT NULL, `category` TEXT NOT NULL, `brand` TEXT, `priceCents` INTEGER NOT NULL, `discountPercent` REAL NOT NULL, `rating` REAL NOT NULL, `stock` INTEGER NOT NULL, `thumbnailUrl` TEXT NOT NULL, `imageUrls` TEXT NOT NULL, `position` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "stores",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `cuisine` TEXT NOT NULL, `rating` REAL NOT NULL, `ratingCount` INTEGER NOT NULL, `deliveryMinMinutes` INTEGER NOT NULL, `deliveryMaxMinutes` INTEGER NOT NULL, `deliveryFeeCents` INTEGER NOT NULL, `minimumOrderCents` INTEGER NOT NULL, `opensAt` TEXT NOT NULL, `closesAt` TEXT NOT NULL, `distanceMiles` REAL NOT NULL, `imageUrl` TEXT NOT NULL, `position` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,38 +15,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "title",
-            "columnName": "title",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "description",
-            "columnName": "description",
+            "fieldPath": "type",
+            "columnName": "type",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "category",
-            "columnName": "category",
+            "fieldPath": "cuisine",
+            "columnName": "cuisine",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "brand",
-            "columnName": "brand",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "priceCents",
-            "columnName": "priceCents",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "discountPercent",
-            "columnName": "discountPercent",
-            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -56,20 +39,56 @@
             "notNull": true
           },
           {
-            "fieldPath": "stock",
-            "columnName": "stock",
+            "fieldPath": "ratingCount",
+            "columnName": "ratingCount",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "thumbnailUrl",
-            "columnName": "thumbnailUrl",
+            "fieldPath": "deliveryMinMinutes",
+            "columnName": "deliveryMinMinutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deliveryMaxMinutes",
+            "columnName": "deliveryMaxMinutes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deliveryFeeCents",
+            "columnName": "deliveryFeeCents",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minimumOrderCents",
+            "columnName": "minimumOrderCents",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "opensAt",
+            "columnName": "opensAt",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "imageUrls",
-            "columnName": "imageUrls",
+            "fieldPath": "closesAt",
+            "columnName": "closesAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "distanceMiles",
+            "columnName": "distanceMiles",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -88,13 +107,115 @@
         },
         "indices": [
           {
-            "name": "index_products_position",
+            "name": "index_stores_position",
             "unique": false,
             "columnNames": [
               "position"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_products_position` ON `${TABLE_NAME}` (`position`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_stores_position` ON `${TABLE_NAME}` (`position`)"
+          },
+          {
+            "name": "index_stores_type",
+            "unique": false,
+            "columnNames": [
+              "type"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_stores_type` ON `${TABLE_NAME}` (`type`)"
+          }
+        ]
+      },
+      {
+        "tableName": "menu_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `storeId` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `section` TEXT NOT NULL, `priceCents` INTEGER NOT NULL, `discountPercent` REAL NOT NULL, `unit` TEXT, `imageUrl` TEXT NOT NULL, `calories` INTEGER, `tags` TEXT NOT NULL, `position` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "storeId",
+            "columnName": "storeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "section",
+            "columnName": "section",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "priceCents",
+            "columnName": "priceCents",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "discountPercent",
+            "columnName": "discountPercent",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unit",
+            "columnName": "unit",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "calories",
+            "columnName": "calories",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "tags",
+            "columnName": "tags",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_menu_items_storeId",
+            "unique": false,
+            "columnNames": [
+              "storeId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_menu_items_storeId` ON `${TABLE_NAME}` (`storeId`)"
           }
         ]
       },
@@ -130,7 +251,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da6410f960b461aea7f1872a46cd4861')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '490a01533d96bb675ffba2a74c67e01e')"
     ]
   }
 }

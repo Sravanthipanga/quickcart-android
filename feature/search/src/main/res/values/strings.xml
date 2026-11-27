@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_search_back">Back</string>
+    <string name="feature_search_hint">Search stores, dishes, groceries</string>
+    <string name="feature_search_clear">Clear search</string>
+    <string name="feature_search_popular">Popular searches</string>
+    <string name="feature_search_stores">Stores</string>
+    <string name="feature_search_items">Dishes and groceries</string>
+    <string name="feature_search_no_results">No results for \"%1$s\"</string>
+    <string name="feature_search_offline">You\'re offline. Showing results from saved stores.</string>
+</resources>

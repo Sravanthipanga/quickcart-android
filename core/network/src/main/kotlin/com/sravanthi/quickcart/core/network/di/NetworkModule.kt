@@ -1,10 +1,13 @@
 package com.sravanthi.quickcart.core.network.di
 
+import android.content.Context
 import com.sravanthi.quickcart.core.network.BuildConfig
-import com.sravanthi.quickcart.core.network.QuickCartApi
+import com.sravanthi.quickcart.core.network.MarketplaceApi
+import com.sravanthi.quickcart.core.network.mock.MockMarketplaceInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -24,29 +27,41 @@ object NetworkModule {
     fun provideJson(): Json = Json {
         ignoreUnknownKeys = true
         coerceInputValues = true
+        explicitNulls = false
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS)
-        .apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+    fun provideOkHttpClient(@ApplicationContext context: Context, json: Json): OkHttpClient =
+        OkHttpClient.Builder()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+                }
+                if (BuildConfig.USE_MOCK_MARKETPLACE) {
+                    addInterceptor(
+                        MockMarketplaceInterceptor(
+                            loadData = { context.assets.open(MARKETPLACE_ASSET).bufferedReader().use { it.readText() } },
+                            json = json,
+                        ),
+                    )
+                }
             }
-        }
-        .build()
+            .build()
 
     @Provides
     @Singleton
-    fun provideApi(client: OkHttpClient, json: Json): QuickCartApi = createApi(BuildConfig.API_BASE_URL, client, json)
+    fun provideApi(client: OkHttpClient, json: Json): MarketplaceApi = createApi(BuildConfig.API_BASE_URL, client, json)
 
-    /** Shared with tests, which point it at a MockWebServer. */
-    fun createApi(baseUrl: String, client: OkHttpClient, json: Json): QuickCartApi = Retrofit.Builder()
+    /** Shared with tests. */
+    fun createApi(baseUrl: String, client: OkHttpClient, json: Json): MarketplaceApi = Retrofit.Builder()
         .baseUrl(baseUrl)
         .client(client)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
-        .create(QuickCartApi::class.java)
+        .create(MarketplaceApi::class.java)
+
+    private const val MARKETPLACE_ASSET = "marketplace.json"
 }
