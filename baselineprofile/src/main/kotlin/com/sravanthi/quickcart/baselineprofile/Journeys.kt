@@ -55,7 +55,16 @@ fun MacrobenchmarkScope.waitForStores() {
 fun MacrobenchmarkScope.scrollStores() {
     fling("store_list", Direction.DOWN)
     fling("store_list", Direction.DOWN)
-    fling("store_list", Direction.UP)
+    scrollStoresToTop()
+}
+
+/** Flings up until the search bar (the list's first item) is back on screen. */
+private fun MacrobenchmarkScope.scrollStoresToTop() {
+    repeat(6) {
+        if (device.hasObject(By.res("search_button"))) return
+        fling("store_list", Direction.UP)
+    }
+    check(device.hasObject(By.res("search_button"))) { "Couldn't scroll the store list back to the top" }
 }
 
 fun MacrobenchmarkScope.openFirstStoreAndScrollMenu() {
@@ -66,6 +75,7 @@ fun MacrobenchmarkScope.openFirstStoreAndScrollMenu() {
 }
 
 fun MacrobenchmarkScope.searchFor(query: String) {
+    scrollStoresToTop()
     onView("search_button", "open search") { it.click() }
     onView("search_field", "type a search") { it.text = query }
     find("search_results")
