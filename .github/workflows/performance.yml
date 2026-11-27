@@ -75,7 +75,8 @@ jobs:
       - name: Summarise results
         if: always()
         run: |
-          python3 .github/scripts/benchmark_summary.py baselineprofile/build >> "$GITHUB_STEP_SUMMARY" || true
+          # Printed to the log as well as the job summary, so the numbers can be read from the log.
+          python3 .github/scripts/benchmark_summary.py baselineprofile/build | tee -a "$GITHUB_STEP_SUMMARY" || true
 
       - name: Upload baseline profile
         if: always()

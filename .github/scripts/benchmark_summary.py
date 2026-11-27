@@ -1,4 +1,4 @@
-"""Prints a Markdown table of Macrobenchmark results found under a build directory."""
+"""Prints Markdown tables of Macrobenchmark results found under a build directory."""
 import glob
 import json
 import os
@@ -10,17 +10,23 @@ if not files:
     print("No benchmark results found.")
     sys.exit(0)
 
-print("| Benchmark | Metric | Median | Min | Max |")
-print("|---|---|---|---|---|")
+single, sampled = [], []
 for path in sorted(files):
     with open(path) as f:
         data = json.load(f)
     for bench in data.get("benchmarks", []):
         name = f'{bench["className"].split(".")[-1]}.{bench["name"]}'
-        for metric, values in bench.get("metrics", {}).items():
-            print(f'| {name} | {metric} | {values["median"]:.1f} | {values["minimum"]:.1f} | {values["maximum"]:.1f} |')
-        for metric, values in bench.get("sampledMetrics", {}).items():
-            p50 = values.get("P50")
-            p90 = values.get("P90")
-            p99 = values.get("P99")
-            print(f"| {name} | {metric} (P50 / P90 / P99) | {p50:.1f} | {p90:.1f} | {p99:.1f} |")
+        for metric, v in bench.get("metrics", {}).items():
+            single.append(f'| {name} | {metric} | {v["median"]:.1f} | {v["minimum"]:.1f} | {v["maximum"]:.1f} |')
+        for metric, v in bench.get("sampledMetrics", {}).items():
+            sampled.append(f'| {name} | {metric} | {v["P50"]:.1f} | {v["P90"]:.1f} | {v["P99"]:.1f} |')
+
+if single:
+    print("| Benchmark | Metric | Median | Min | Max |")
+    print("|---|---|---|---|---|")
+    print("\n".join(single))
+    print()
+if sampled:
+    print("| Benchmark | Metric | P50 | P90 | P99 |")
+    print("|---|---|---|---|---|")
+    print("\n".join(sampled))
