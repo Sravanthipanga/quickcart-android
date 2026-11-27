@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_catalog_title">Discover</string>
+    <string name="feature_catalog_in_stock">In stock</string>
+    <string name="feature_catalog_out_of_stock">Out of stock</string>
+    <plurals name="feature_catalog_low_stock">
+        <item quantity="one">Only %1$d left</item>
+        <item quantity="other">Only %1$d left</item>
+    </plurals>
+    <string name="feature_catalog_product_summary">%1$s, %2$s, rated %3$.1f</string>
+    <string name="feature_catalog_offline">You\'re offline. Showing saved products.</string>
+    <string name="feature_catalog_retry">Retry</string>
+    <string name="feature_catalog_load_more_failed">Couldn\'t load more. Tap to retry</string>
+    <string name="feature_catalog_error_title">Can\'t reach the store</string>
+    <string name="feature_catalog_error_body">Check your connection and try again. Products you\'ve browsed will be saved for offline use.</string>
+</resources>

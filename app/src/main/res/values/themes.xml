@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose draws the UI; this theme only sets the window background shown during launch. -->
+    <style name="Theme.QuickCart" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/quickcart_background</item>
+    </style>
+</resources>
