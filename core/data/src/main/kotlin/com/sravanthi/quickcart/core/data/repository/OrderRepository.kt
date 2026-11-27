@@ -1,10 +1,23 @@
 package com.sravanthi.quickcart.core.data.repository
 
+import com.sravanthi.quickcart.core.model.Order
 import com.sravanthi.quickcart.core.model.OrderConfirmation
+import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
-    /** Sends the current cart to the server. The cart is emptied only when the order is accepted. */
+    /** Sends the current cart to the server. The cart is emptied, and the order saved, only when it is accepted. */
     suspend fun placeOrder(): PlaceOrderResult
+
+    /** Order history, newest first, from the device. */
+    fun observeOrders(): Flow<List<Order>>
+
+    fun observeOrder(orderId: String): Flow<Order?>
+
+    /** Asks the server for the latest status. Returns false when offline; the last known status stays. */
+    suspend fun refreshStatus(orderId: String): Boolean
+
+    /** Replaces the cart with the items of a past order. */
+    suspend fun reorder(orderId: String)
 }
 
 sealed interface PlaceOrderResult {

@@ -19,5 +19,6 @@
     <string name="feature_cart_placed_order">Order %1$s from %2$s</string>
     <string name="feature_cart_placed_eta">Arriving in %1$d–%2$d min</string>
     <string name="feature_cart_placed_total">Order total: %1$s</string>
+    <string name="feature_cart_track_order">Track order</string>
     <string name="feature_cart_back_to_stores">Back to stores</string>
 </resources>

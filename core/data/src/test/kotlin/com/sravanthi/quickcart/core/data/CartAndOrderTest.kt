@@ -27,7 +27,7 @@ class CartAndOrderTest {
     private val marketplace = TestMarketplace()
     private val stores = OfflineFirstStoreRepository(marketplace.api, marketplace.database, Clock.systemUTC())
     private val cart = OfflineFirstCartRepository(marketplace.database, Clock.systemUTC())
-    private val orders = NetworkOrderRepository(marketplace.api, marketplace.database, marketplace.json)
+    private val orders = NetworkOrderRepository(marketplace.api, marketplace.database, marketplace.json, Clock.systemUTC())
 
     private lateinit var pizza: MenuItem // $14.99 at Bella Napoli (minimum $12)
     private lateinit var bruschetta: MenuItem // $8.99 at Bella Napoli

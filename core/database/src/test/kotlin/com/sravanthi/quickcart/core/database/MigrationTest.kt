@@ -41,6 +41,28 @@ class MigrationTest {
         }
     }
 
+    @Test
+    fun `v2 to v3 keeps the cart and adds empty order history`() {
+        helper.createDatabase(DB, 2).use { db ->
+            db.execSQL(
+                """INSERT INTO cart_items (itemId, storeId, name, description, section, priceCents, discountPercent,
+                   unit, imageUrl, quantity, addedAtMillis)
+                   VALUES (1001, 1, 'Classic Margherita Pizza', '', 'Pizza', 1499, 0.0, NULL, '', 2, 0)""",
+            )
+        }
+
+        helper.runMigrationsAndValidate(DB, 3, true).use { db ->
+            db.query("SELECT quantity FROM cart_items WHERE itemId = 1001").use { cursor ->
+                cursor.moveToFirst()
+                assertEquals(2, cursor.getInt(0))
+            }
+            db.query("SELECT COUNT(*) FROM orders").use { cursor ->
+                cursor.moveToFirst()
+                assertEquals(0, cursor.getInt(0))
+            }
+        }
+    }
+
     private companion object {
         const val DB = "migration-test"
     }

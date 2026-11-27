@@ -102,7 +102,11 @@ data class NetworkOrderConfirmation(
     val minimumOrderCents: Long,
     val etaMinMinutes: Int,
     val etaMaxMinutes: Int,
+    val placedAtEpochMillis: Long,
 )
+
+@Serializable
+data class NetworkOrderStatus(val orderId: String, val status: String)
 
 /** The error body the API returns with 4xx responses. */
 @Serializable
@@ -114,4 +118,10 @@ fun NetworkOrderConfirmation.asExternalModel() = com.sravanthi.quickcart.core.mo
     pricing = com.sravanthi.quickcart.core.model.OrderPricing(subtotalCents, deliveryFeeCents, serviceFeeCents, minimumOrderCents),
     etaMinMinutes = etaMinMinutes,
     etaMaxMinutes = etaMaxMinutes,
+    placedAt = java.time.Instant.ofEpochMilli(placedAtEpochMillis),
 )
+
+/** Unknown statuses are treated as "placed" rather than crashing on a newer server. */
+fun NetworkOrderStatus.asExternalModel(): com.sravanthi.quickcart.core.model.OrderStatus =
+    com.sravanthi.quickcart.core.model.OrderStatus.entries.firstOrNull { it.name == status }
+        ?: com.sravanthi.quickcart.core.model.OrderStatus.PLACED

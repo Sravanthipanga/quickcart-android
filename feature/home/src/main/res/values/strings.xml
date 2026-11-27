@@ -19,4 +19,5 @@
         <item quantity="one">Cart, %1$d item</item>
         <item quantity="other">Cart, %1$d items</item>
     </plurals>
+    <string name="feature_home_orders">Orders</string>
 </resources>

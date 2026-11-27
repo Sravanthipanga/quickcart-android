@@ -42,4 +42,5 @@ data class OrderConfirmation(
     val pricing: OrderPricing,
     val etaMinMinutes: Int,
     val etaMaxMinutes: Int,
+    val placedAt: java.time.Instant,
 )

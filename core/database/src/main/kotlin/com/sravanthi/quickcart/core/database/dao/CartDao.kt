@@ -35,6 +35,16 @@ interface CartDao {
     @Query("DELETE FROM cart_items")
     suspend fun clear()
 
+    @Upsert
+    suspend fun upsertAll(items: List<CartItemEntity>)
+
+    /** Replaces the whole cart with [items] in one step (used by reorder). */
+    @Transaction
+    suspend fun replaceAll(items: List<CartItemEntity>) {
+        clear()
+        upsertAll(items)
+    }
+
     /** Empties the cart and starts it again with [item], in one step. */
     @Transaction
     suspend fun replaceWith(item: CartItemEntity) {

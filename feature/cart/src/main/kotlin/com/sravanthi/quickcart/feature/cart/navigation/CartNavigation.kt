@@ -9,6 +9,6 @@ private const val CART_ROUTE = "cart"
 
 fun NavController.navigateToCart() = navigate(CART_ROUTE) { launchSingleTop = true }
 
-fun NavGraphBuilder.cartScreen(onBack: () -> Unit, onBrowseStores: () -> Unit) {
-    composable(route = CART_ROUTE) { CartRoute(onBack = onBack, onBrowseStores = onBrowseStores) }
+fun NavGraphBuilder.cartScreen(onBack: () -> Unit, onBrowseStores: () -> Unit, onTrackOrder: (String) -> Unit) {
+    composable(route = CART_ROUTE) { CartRoute(onBack = onBack, onBrowseStores = onBrowseStores, onTrackOrder = onTrackOrder) }
 }

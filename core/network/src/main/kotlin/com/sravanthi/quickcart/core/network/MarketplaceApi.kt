@@ -3,6 +3,7 @@ package com.sravanthi.quickcart.core.network
 import com.sravanthi.quickcart.core.network.model.NetworkMenu
 import com.sravanthi.quickcart.core.network.model.NetworkOrderConfirmation
 import com.sravanthi.quickcart.core.network.model.NetworkOrderRequest
+import com.sravanthi.quickcart.core.network.model.NetworkOrderStatus
 import com.sravanthi.quickcart.core.network.model.NetworkSearchResults
 import com.sravanthi.quickcart.core.network.model.NetworkStore
 import com.sravanthi.quickcart.core.network.model.NetworkStorePage
@@ -33,4 +34,8 @@ interface MarketplaceApi {
      */
     @POST("orders")
     suspend fun placeOrder(@Body order: NetworkOrderRequest): NetworkOrderConfirmation
+
+    /** The live status of an order. */
+    @GET("orders/{id}")
+    suspend fun getOrderStatus(@Path("id") orderId: String): NetworkOrderStatus
 }
