@@ -1,5 +1,6 @@
 package com.sravanthi.quickcart.core.ui
 
+import androidx.compose.ui.platform.testTag
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,6 +46,7 @@ fun StoreCard(store: Store, isOpen: Boolean, onClick: () -> Unit, modifier: Modi
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
+            .testTag("store_card")
             .semantics(mergeDescendants = true) {
                 contentDescription = listOfNotNull(store.name, store.cuisine, meta, closedLabel).joinToString(", ")
             },

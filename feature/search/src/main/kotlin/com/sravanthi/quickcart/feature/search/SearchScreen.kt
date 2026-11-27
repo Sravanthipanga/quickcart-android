@@ -1,5 +1,6 @@
 package com.sravanthi.quickcart.feature.search
 
+import androidx.compose.ui.platform.testTag
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -100,7 +101,7 @@ internal fun SearchScreen(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                         ),
-                        modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+                        modifier = Modifier.fillMaxWidth().focusRequester(focusRequester).testTag("search_field"),
                     )
                 },
             )
@@ -138,7 +139,7 @@ private fun Results(state: SearchUiState.Results, onStoreClick: (Long) -> Unit) 
         )
         return
     }
-    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
+    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.testTag("search_results")) {
         if (state.fromCache) item { OfflineNotice() }
         if (state.results.stores.isNotEmpty()) {
             item { SectionTitle(stringResource(R.string.feature_search_stores)) }
