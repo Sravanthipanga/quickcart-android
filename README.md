@@ -78,11 +78,19 @@ flowchart LR
 - **Benchmarks.** `:baselineprofile` measures cold startup (until the store list is on screen) and store-list scrolling frame times, each with and without the profile.
 - **Compose stability.** A [stability config](compose-stability.conf) marks the immutable domain models, `java.time` values and read-only collections as stable. The Compose compiler reports went from **21 unstable composable parameters to 0**, so screens skip recomposing when the database re-emits equal data.
 
-<!-- BENCHMARK_RESULTS -->
+Latest results from the Performance workflow:
+
+| | Without profile | With baseline profile |
+|---|---|---|
+| Cold start to first frame (median of 10) | 1,630 ms | 1,614 ms |
+| Store list scroll: frame CPU time, P50 / P90 | 144.6 / 198.0 ms | 134.8 / 197.3 ms |
+
+These come from a Pixel 6 (API 34) emulator on a shared CI runner with software rendering, so absolute times are far slower than on a phone and the startup difference is within noise. The workflow exists to catch regressions and to make measuring on a real phone one command.
 
 ```bash
 ./gradlew :app:generateReleaseBaselineProfile                  # regenerate the profile (needs an emulator or device)
 ./gradlew :baselineprofile:pixel6Api34BenchmarkReleaseAndroidTest # run the benchmarks on a Gradle Managed Device
+./gradlew :baselineprofile:connectedBenchmarkReleaseAndroidTest  # run them on a connected phone
 ./gradlew assembleRelease -Pquickcart.composeReports=true       # Compose stability reports in build/compose-reports
 ```
 
