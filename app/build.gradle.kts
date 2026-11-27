@@ -28,7 +28,9 @@ android {
 dependencies {
     implementation(projects.core.data)
     implementation(projects.core.designsystem)
-    implementation(projects.feature.catalog)
+    implementation(projects.feature.home)
+    implementation(projects.feature.store)
+    implementation(projects.feature.search)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

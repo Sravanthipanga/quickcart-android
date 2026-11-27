@@ -1,0 +1,1423 @@
+{
+ "stores": [
+  {
+   "id": 1,
+   "name": "Bella Napoli Pizzeria",
+   "type": "RESTAURANT",
+   "cuisine": "Italian · Pizza",
+   "rating": 4.7,
+   "ratingCount": 1284,
+   "deliveryMinMinutes": 25,
+   "deliveryMaxMinutes": 35,
+   "deliveryFeeCents": 199,
+   "minimumOrderCents": 1200,
+   "opensAt": "11:00",
+   "closesAt": "23:00",
+   "distanceMiles": 1.2,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/1.webp"
+  },
+  {
+   "id": 2,
+   "name": "Karachi Grill",
+   "type": "RESTAURANT",
+   "cuisine": "Pakistani · Indian",
+   "rating": 4.8,
+   "ratingCount": 962,
+   "deliveryMinMinutes": 30,
+   "deliveryMaxMinutes": 45,
+   "deliveryFeeCents": 299,
+   "minimumOrderCents": 1500,
+   "opensAt": "12:00",
+   "closesAt": "23:30",
+   "distanceMiles": 2.6,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/11.webp"
+  },
+  {
+   "id": 3,
+   "name": "Sakura Ramen House",
+   "type": "RESTAURANT",
+   "cuisine": "Japanese · Ramen",
+   "rating": 4.9,
+   "ratingCount": 2103,
+   "deliveryMinMinutes": 20,
+   "deliveryMaxMinutes": 30,
+   "deliveryFeeCents": 0,
+   "minimumOrderCents": 1000,
+   "opensAt": "11:30",
+   "closesAt": "22:00",
+   "distanceMiles": 0.8,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/16.webp"
+  },
+  {
+   "id": 4,
+   "name": "Taco Fiesta",
+   "type": "RESTAURANT",
+   "cuisine": "Mexican",
+   "rating": 4.5,
+   "ratingCount": 741,
+   "deliveryMinMinutes": 15,
+   "deliveryMaxMinutes": 25,
+   "deliveryFeeCents": 149,
+   "minimumOrderCents": 1000,
+   "opensAt": "10:00",
+   "closesAt": "02:00",
+   "distanceMiles": 1.9,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/36.webp"
+  },
+  {
+   "id": 5,
+   "name": "Golden Wok",
+   "type": "RESTAURANT",
+   "cuisine": "Pan-Asian · Thai · Korean",
+   "rating": 4.6,
+   "ratingCount": 1530,
+   "deliveryMinMinutes": 25,
+   "deliveryMaxMinutes": 40,
+   "deliveryFeeCents": 249,
+   "minimumOrderCents": 1500,
+   "opensAt": "11:00",
+   "closesAt": "22:30",
+   "distanceMiles": 3.1,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/18.webp"
+  },
+  {
+   "id": 6,
+   "name": "Olive & Thyme",
+   "type": "RESTAURANT",
+   "cuisine": "Mediterranean · Middle Eastern",
+   "rating": 4.6,
+   "ratingCount": 688,
+   "deliveryMinMinutes": 25,
+   "deliveryMaxMinutes": 35,
+   "deliveryFeeCents": 199,
+   "minimumOrderCents": 1200,
+   "opensAt": "11:00",
+   "closesAt": "21:30",
+   "distanceMiles": 2.2,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/29.webp"
+  },
+  {
+   "id": 7,
+   "name": "Island Grill",
+   "type": "RESTAURANT",
+   "cuisine": "Hawaiian · Grill",
+   "rating": 4.4,
+   "ratingCount": 312,
+   "deliveryMinMinutes": 30,
+   "deliveryMaxMinutes": 45,
+   "deliveryFeeCents": 299,
+   "minimumOrderCents": 1500,
+   "opensAt": "16:00",
+   "closesAt": "23:00",
+   "distanceMiles": 4.0,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/47.webp"
+  },
+  {
+   "id": 8,
+   "name": "FreshMart Grocery",
+   "type": "GROCERY",
+   "cuisine": "Groceries · Produce · Pantry",
+   "rating": 4.7,
+   "ratingCount": 3420,
+   "deliveryMinMinutes": 35,
+   "deliveryMaxMinutes": 60,
+   "deliveryFeeCents": 399,
+   "minimumOrderCents": 2500,
+   "opensAt": "07:00",
+   "closesAt": "22:00",
+   "distanceMiles": 1.5,
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/strawberry/thumbnail.webp"
+  },
+  {
+   "id": 9,
+   "name": "Corner Market 24/7",
+   "type": "CONVENIENCE",
+   "cuisine": "Convenience · Essentials",
+   "rating": 4.3,
+   "ratingCount": 524,
+   "deliveryMinMinutes": 10,
+   "deliveryMaxMinutes": 20,
+   "deliveryFeeCents": 299,
+   "minimumOrderCents": 800,
+   "opensAt": "00:00",
+   "closesAt": "00:00",
+   "distanceMiles": 0.4,
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/soft-drinks/thumbnail.webp"
+  },
+  {
+   "id": 10,
+   "name": "Sweet Spot Desserts",
+   "type": "DESSERT",
+   "cuisine": "Desserts · Bakery",
+   "rating": 4.8,
+   "ratingCount": 876,
+   "deliveryMinMinutes": 20,
+   "deliveryMaxMinutes": 30,
+   "deliveryFeeCents": 199,
+   "minimumOrderCents": 800,
+   "opensAt": "12:00",
+   "closesAt": "23:00",
+   "distanceMiles": 1.1,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/3.webp"
+  },
+  {
+   "id": 11,
+   "name": "Blend Smoothie Bar",
+   "type": "DRINKS",
+   "cuisine": "Smoothies · Juice",
+   "rating": 4.6,
+   "ratingCount": 455,
+   "deliveryMinMinutes": 15,
+   "deliveryMaxMinutes": 25,
+   "deliveryFeeCents": 149,
+   "minimumOrderCents": 600,
+   "opensAt": "07:00",
+   "closesAt": "19:00",
+   "distanceMiles": 0.9,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/25.webp"
+  }
+ ],
+ "items": [
+  {
+   "id": 1001,
+   "storeId": 1,
+   "name": "Classic Margherita Pizza",
+   "description": "Wood-fired, San Marzano tomato, fresh mozzarella and basil.",
+   "section": "Pizza",
+   "priceCents": 1499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/1.webp",
+   "calories": 300,
+   "tags": [
+    "popular",
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1002,
+   "storeId": 1,
+   "name": "Italian Margherita Pizza",
+   "description": "Thin crust, buffalo mozzarella, basil and olive oil.",
+   "section": "Pizza",
+   "priceCents": 1599,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/45.webp",
+   "calories": 280,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1003,
+   "storeId": 1,
+   "name": "Chicken Alfredo Pasta",
+   "description": "Fettuccine in a creamy parmesan sauce with grilled chicken.",
+   "section": "Pasta",
+   "priceCents": 1699,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/4.webp",
+   "calories": 500,
+   "tags": []
+  },
+  {
+   "id": 1004,
+   "storeId": 1,
+   "name": "Shrimp Scampi Pasta",
+   "description": "Garlic butter shrimp with linguine, lemon and parsley.",
+   "section": "Pasta",
+   "priceCents": 1899,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/10.webp",
+   "calories": 400,
+   "tags": []
+  },
+  {
+   "id": 1005,
+   "storeId": 1,
+   "name": "Pesto Pasta with Cherry Tomatoes",
+   "description": "Basil pesto, blistered cherry tomatoes and pine nuts.",
+   "section": "Pasta",
+   "priceCents": 1449,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/46.webp",
+   "calories": 320,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1006,
+   "storeId": 1,
+   "name": "Tomato Basil Bruschetta",
+   "description": "Toasted ciabatta with tomato, basil and garlic.",
+   "section": "Starters",
+   "priceCents": 899,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/7.webp",
+   "calories": 120,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1007,
+   "storeId": 1,
+   "name": "Caprese Bruschetta",
+   "description": "Bruschetta topped with mozzarella, tomato and balsamic.",
+   "section": "Starters",
+   "priceCents": 949,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/41.webp",
+   "calories": 150,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1008,
+   "storeId": 1,
+   "name": "Caprese Salad",
+   "description": "Fresh mozzarella, tomato and basil with olive oil.",
+   "section": "Starters",
+   "priceCents": 1099,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/9.webp",
+   "calories": 200,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1009,
+   "storeId": 1,
+   "name": "Italian Tiramisu",
+   "description": "Espresso-soaked ladyfingers with mascarpone cream.",
+   "section": "Desserts",
+   "priceCents": 799,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/23.webp",
+   "calories": 350,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1010,
+   "storeId": 2,
+   "name": "Chicken Biryani",
+   "description": "Fragrant basmati rice layered with spiced chicken.",
+   "section": "Biryani & rice",
+   "priceCents": 1599,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/11.webp",
+   "calories": 550,
+   "tags": [
+    "popular",
+    "spicy"
+   ]
+  },
+  {
+   "id": 1011,
+   "storeId": 2,
+   "name": "Butter Chicken (Murgh Makhani)",
+   "description": "Tender chicken in a rich tomato and butter gravy.",
+   "section": "Curries",
+   "priceCents": 1749,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/20.webp",
+   "calories": 480,
+   "tags": [
+    "popular",
+    "spicy"
+   ]
+  },
+  {
+   "id": 1012,
+   "storeId": 2,
+   "name": "Chicken Karahi",
+   "description": "Wok-cooked chicken in tomato, ginger and green chili.",
+   "section": "Curries",
+   "priceCents": 1699,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/12.webp",
+   "calories": 420,
+   "tags": [
+    "spicy"
+   ]
+  },
+  {
+   "id": 1013,
+   "storeId": 2,
+   "name": "Aloo Keema",
+   "description": "Spiced minced beef with potatoes.",
+   "section": "Curries",
+   "priceCents": 1399,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/13.webp",
+   "calories": 380,
+   "tags": []
+  },
+  {
+   "id": 1014,
+   "storeId": 2,
+   "name": "Saag (Spinach) with Makki di Roti",
+   "description": "Slow-cooked mustard greens with corn flatbread.",
+   "section": "Curries",
+   "priceCents": 1299,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/15.webp",
+   "calories": 280,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1015,
+   "storeId": 2,
+   "name": "Chapli Kebabs",
+   "description": "Spiced, pan-fried minced beef kebabs.",
+   "section": "Grill",
+   "priceCents": 1199,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/14.webp",
+   "calories": 320,
+   "tags": [
+    "spicy"
+   ]
+  },
+  {
+   "id": 1016,
+   "storeId": 2,
+   "name": "South Indian Masala Dosa",
+   "description": "Crispy rice crepe with spiced potato filling.",
+   "section": "Breakfast",
+   "priceCents": 1199,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/28.webp",
+   "calories": 320,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1017,
+   "storeId": 2,
+   "name": "Mango Lassi",
+   "description": "Chilled yogurt drink blended with ripe mango.",
+   "section": "Drinks",
+   "priceCents": 499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/22.webp",
+   "calories": 180,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1018,
+   "storeId": 3,
+   "name": "Japanese Ramen Soup",
+   "description": "Rich broth, noodles, soft egg and scallions.",
+   "section": "Ramen",
+   "priceCents": 1599,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/16.webp",
+   "calories": 480,
+   "tags": [
+    "popular"
+   ]
+  },
+  {
+   "id": 1019,
+   "storeId": 3,
+   "name": "Teriyaki Chicken Stir-Fry",
+   "description": "Chicken glazed in teriyaki with crisp vegetables.",
+   "section": "Mains",
+   "priceCents": 1499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/42.webp",
+   "calories": 320,
+   "tags": []
+  },
+  {
+   "id": 1020,
+   "storeId": 3,
+   "name": "Cucumber Avocado Rolls",
+   "description": "Cucumber and avocado maki, eight pieces.",
+   "section": "Sushi",
+   "priceCents": 899,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/48.webp",
+   "calories": 180,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1021,
+   "storeId": 3,
+   "name": "Japanese Matcha Green Tea Ice Cream",
+   "description": "Creamy green tea ice cream.",
+   "section": "Desserts",
+   "priceCents": 649,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/34.webp",
+   "calories": 280,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1022,
+   "storeId": 4,
+   "name": "Mexican Chicken Enchiladas",
+   "description": "Corn tortillas filled with chicken, baked in red sauce.",
+   "section": "Mains",
+   "priceCents": 1399,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/36.webp",
+   "calories": 380,
+   "tags": [
+    "popular"
+   ]
+  },
+  {
+   "id": 1023,
+   "storeId": 4,
+   "name": "Mango Salsa Chicken",
+   "description": "Grilled chicken topped with fresh mango salsa.",
+   "section": "Mains",
+   "priceCents": 1499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/5.webp",
+   "calories": 380,
+   "tags": []
+  },
+  {
+   "id": 1024,
+   "storeId": 4,
+   "name": "Mexican Street Corn (Elote)",
+   "description": "Grilled corn with chili, lime and cotija cheese.",
+   "section": "Sides & snacks",
+   "priceCents": 699,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/26.webp",
+   "calories": 180,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1025,
+   "storeId": 4,
+   "name": "Mango Avocado Salsa",
+   "description": "Mango, avocado, red onion and lime. Served with chips.",
+   "section": "Sides & snacks",
+   "priceCents": 599,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/43.webp",
+   "calories": 90,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1026,
+   "storeId": 5,
+   "name": "Vegetarian Stir-Fry",
+   "description": "Seasonal vegetables tossed in a ginger soy glaze.",
+   "section": "Stir-fries",
+   "priceCents": 1299,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/2.webp",
+   "calories": 250,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1027,
+   "storeId": 5,
+   "name": "Beef and Broccoli Stir-Fry",
+   "description": "Tender beef and broccoli in oyster sauce.",
+   "section": "Stir-fries",
+   "priceCents": 1599,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/8.webp",
+   "calories": 380,
+   "tags": []
+  },
+  {
+   "id": 1028,
+   "storeId": 5,
+   "name": "Shrimp and Asparagus Stir-Fry",
+   "description": "Shrimp and asparagus in a light garlic sauce.",
+   "section": "Stir-fries",
+   "priceCents": 1749,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/44.webp",
+   "calories": 250,
+   "tags": []
+  },
+  {
+   "id": 1029,
+   "storeId": 5,
+   "name": "Korean Bibimbap",
+   "description": "Rice bowl with vegetables, beef, egg and gochujang.",
+   "section": "Bowls",
+   "priceCents": 1549,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/18.webp",
+   "calories": 550,
+   "tags": [
+    "popular",
+    "spicy"
+   ]
+  },
+  {
+   "id": 1030,
+   "storeId": 5,
+   "name": "Thai Green Curry",
+   "description": "Green curry with vegetables and Thai basil.",
+   "section": "Curries",
+   "priceCents": 1499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/21.webp",
+   "calories": 480,
+   "tags": [
+    "vegetarian",
+    "spicy"
+   ]
+  },
+  {
+   "id": 1031,
+   "storeId": 5,
+   "name": "Thai Coconut Shrimp Curry",
+   "description": "Shrimp in a creamy coconut red curry.",
+   "section": "Curries",
+   "priceCents": 1799,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/37.webp",
+   "calories": 420,
+   "tags": [
+    "spicy"
+   ]
+  },
+  {
+   "id": 1032,
+   "storeId": 5,
+   "name": "Vietnamese Fresh Spring Rolls",
+   "description": "Rice paper rolls with vegetables and herbs, peanut dip.",
+   "section": "Starters",
+   "priceCents": 849,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/32.webp",
+   "calories": 180,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1033,
+   "storeId": 6,
+   "name": "Lebanese Falafel Wrap",
+   "description": "Crispy falafel, tahini and pickles in warm pita.",
+   "section": "Wraps & grill",
+   "priceCents": 1099,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/29.webp",
+   "calories": 400,
+   "tags": [
+    "popular",
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1034,
+   "storeId": 6,
+   "name": "Turkish Kebabs",
+   "description": "Grilled marinated lamb skewers with flatbread.",
+   "section": "Wraps & grill",
+   "priceCents": 1649,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/24.webp",
+   "calories": 280,
+   "tags": [
+    "spicy"
+   ]
+  },
+  {
+   "id": 1035,
+   "storeId": 6,
+   "name": "Greek Moussaka",
+   "description": "Layers of eggplant, spiced beef and bechamel.",
+   "section": "Mains",
+   "priceCents": 1699,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/19.webp",
+   "calories": 420,
+   "tags": []
+  },
+  {
+   "id": 1036,
+   "storeId": 6,
+   "name": "Moroccan Chickpea Tagine",
+   "description": "Chickpeas and vegetables slow-cooked with warm spices.",
+   "section": "Mains",
+   "priceCents": 1499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/17.webp",
+   "calories": 320,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1037,
+   "storeId": 6,
+   "name": "Quinoa Salad with Avocado",
+   "description": "Quinoa, avocado, cucumber and lemon dressing.",
+   "section": "Salads",
+   "priceCents": 1199,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/6.webp",
+   "calories": 280,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1038,
+   "storeId": 6,
+   "name": "Mediterranean Quinoa Salad",
+   "description": "Quinoa, olives, feta, tomato and herbs.",
+   "section": "Salads",
+   "priceCents": 1249,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/33.webp",
+   "calories": 220,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1039,
+   "storeId": 6,
+   "name": "Mediterranean Chickpea Salad",
+   "description": "Chickpeas, cucumber, tomato and red onion.",
+   "section": "Salads",
+   "priceCents": 1149,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/49.webp",
+   "calories": 220,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1040,
+   "storeId": 6,
+   "name": "Moroccan Couscous Salad",
+   "description": "Couscous with roasted vegetables and herbs.",
+   "section": "Salads",
+   "priceCents": 1049,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/39.webp",
+   "calories": 260,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1041,
+   "storeId": 6,
+   "name": "Greek Spanakopita",
+   "description": "Flaky phyllo filled with spinach and feta.",
+   "section": "Small plates",
+   "priceCents": 899,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/38.webp",
+   "calories": 280,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1042,
+   "storeId": 6,
+   "name": "Spanish Patatas Bravas",
+   "description": "Crispy potatoes with spicy tomato sauce and aioli.",
+   "section": "Small plates",
+   "priceCents": 799,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/31.webp",
+   "calories": 240,
+   "tags": [
+    "vegetarian",
+    "spicy"
+   ]
+  },
+  {
+   "id": 1043,
+   "storeId": 6,
+   "name": "Russian Borscht",
+   "description": "Beet soup with sour cream and dill.",
+   "section": "Small plates",
+   "priceCents": 1199,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/27.webp",
+   "calories": 220,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1044,
+   "storeId": 7,
+   "name": "Hawaiian Chicken Skewers",
+   "description": "Grilled chicken and pineapple skewers.",
+   "section": "Grill",
+   "priceCents": 1599,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/47.webp",
+   "calories": 280,
+   "tags": []
+  },
+  {
+   "id": 1045,
+   "storeId": 7,
+   "name": "Mexican Street Corn (Elote)",
+   "description": "Grilled corn with chili, lime and cotija cheese.",
+   "section": "Sides",
+   "priceCents": 699,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/26.webp",
+   "calories": 180,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1046,
+   "storeId": 7,
+   "name": "Brazilian Chocolate Brigadeiros",
+   "description": "Brazilian chocolate truffles, box of four.",
+   "section": "Desserts",
+   "priceCents": 499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/35.webp",
+   "calories": 120,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1047,
+   "storeId": 8,
+   "name": "Apple",
+   "description": "Fresh and crisp apples, perfect for snacking or incorporating into various recipes.",
+   "section": "Produce",
+   "priceCents": 199,
+   "discountPercent": 12.6,
+   "unit": "each",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/apple/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1048,
+   "storeId": 8,
+   "name": "Cucumber",
+   "description": "Crisp and hydrating cucumbers, ideal for salads, snacks, or as a refreshing side.",
+   "section": "Produce",
+   "priceCents": 149,
+   "discountPercent": 0.0,
+   "unit": "each",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/cucumber/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1049,
+   "storeId": 8,
+   "name": "Green Bell Pepper",
+   "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
+   "section": "Produce",
+   "priceCents": 129,
+   "discountPercent": 0.0,
+   "unit": "each",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1050,
+   "storeId": 8,
+   "name": "Green Chili Pepper",
+   "description": "Spicy green chili pepper, ideal for adding heat to your favorite recipes.",
+   "section": "Produce",
+   "priceCents": 99,
+   "discountPercent": 0.0,
+   "unit": "4 oz",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/green-chili-pepper/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1051,
+   "storeId": 8,
+   "name": "Kiwi",
+   "description": "Nutrient-rich kiwi, perfect for snacking or adding a tropical twist to your dishes.",
+   "section": "Produce",
+   "priceCents": 249,
+   "discountPercent": 15.2,
+   "unit": "each",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/kiwi/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1052,
+   "storeId": 8,
+   "name": "Lemon",
+   "description": "Zesty and tangy lemons, versatile for cooking, baking, or making refreshing beverages.",
+   "section": "Produce",
+   "priceCents": 79,
+   "discountPercent": 9.7,
+   "unit": "each",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/lemon/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1053,
+   "storeId": 8,
+   "name": "Mulberry",
+   "description": "Sweet and juicy mulberries, perfect for snacking or adding to desserts and cereals.",
+   "section": "Produce",
+   "priceCents": 499,
+   "discountPercent": 12.9,
+   "unit": "6 oz",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/mulberry/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1054,
+   "storeId": 8,
+   "name": "Potatoes",
+   "description": "Versatile and starchy potatoes, great for roasting, mashing, or as a side dish.",
+   "section": "Produce",
+   "priceCents": 229,
+   "discountPercent": 5.4,
+   "unit": "5 lb bag",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/potatoes/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1055,
+   "storeId": 8,
+   "name": "Red Onions",
+   "description": "Flavorful and aromatic red onions, perfect for adding depth to your savory dishes.",
+   "section": "Produce",
+   "priceCents": 199,
+   "discountPercent": 9.9,
+   "unit": "per lb",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/red-onions/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1056,
+   "storeId": 8,
+   "name": "Strawberry",
+   "description": "Sweet and succulent strawberries, great for snacking, desserts, or blending into smoothies.",
+   "section": "Produce",
+   "priceCents": 399,
+   "discountPercent": 0.0,
+   "unit": "1 lb",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/strawberry/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1057,
+   "storeId": 8,
+   "name": "Beef Steak",
+   "description": "High-quality beef steak, great for grilling or cooking to your preferred level of doneness.",
+   "section": "Meat & seafood",
+   "priceCents": 1299,
+   "discountPercent": 9.6,
+   "unit": "per lb",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/beef-steak/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1058,
+   "storeId": 8,
+   "name": "Chicken Meat",
+   "description": "Fresh and tender chicken meat, suitable for various culinary preparations.",
+   "section": "Meat & seafood",
+   "priceCents": 999,
+   "discountPercent": 13.7,
+   "unit": "per lb",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/chicken-meat/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1059,
+   "storeId": 8,
+   "name": "Fish Steak",
+   "description": "Quality fish steak, suitable for grilling, baking, or pan-searing.",
+   "section": "Meat & seafood",
+   "priceCents": 1499,
+   "discountPercent": 0.0,
+   "unit": "per lb",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/fish-steak/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1060,
+   "storeId": 8,
+   "name": "Eggs",
+   "description": "Fresh eggs, a versatile ingredient for baking, cooking, or breakfast.",
+   "section": "Dairy & eggs",
+   "priceCents": 299,
+   "discountPercent": 11.1,
+   "unit": "dozen",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/eggs/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1061,
+   "storeId": 8,
+   "name": "Milk",
+   "description": "Fresh and nutritious milk, a staple for various recipes and daily consumption.",
+   "section": "Dairy & eggs",
+   "priceCents": 349,
+   "discountPercent": 13.7,
+   "unit": "1 gal",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/milk/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1062,
+   "storeId": 8,
+   "name": "Ice Cream",
+   "description": "Creamy and delicious ice cream, available in various flavors for a delightful treat.",
+   "section": "Dairy & eggs",
+   "priceCents": 549,
+   "discountPercent": 8.7,
+   "unit": "1 pint",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/ice-cream/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1063,
+   "storeId": 8,
+   "name": "Cooking Oil",
+   "description": "Versatile cooking oil suitable for frying, sautéing, and various culinary applications.",
+   "section": "Pantry",
+   "priceCents": 499,
+   "discountPercent": 9.3,
+   "unit": "48 fl oz",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/cooking-oil/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1064,
+   "storeId": 8,
+   "name": "Honey Jar",
+   "description": "Pure and natural honey in a convenient jar, perfect for sweetening beverages or drizzling over food.",
+   "section": "Pantry",
+   "priceCents": 699,
+   "discountPercent": 14.4,
+   "unit": "12 oz jar",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/honey-jar/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1065,
+   "storeId": 8,
+   "name": "Rice",
+   "description": "High-quality rice, a staple for various cuisines and a versatile base for many dishes.",
+   "section": "Pantry",
+   "priceCents": 599,
+   "discountPercent": 9.3,
+   "unit": "5 lb bag",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/rice/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1066,
+   "storeId": 8,
+   "name": "Nescafe Coffee",
+   "description": "Quality coffee from Nescafe, available in various blends for a rich and satisfying cup.",
+   "section": "Pantry",
+   "priceCents": 799,
+   "discountPercent": 0.0,
+   "unit": "7 oz jar",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/nescafe-coffee/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1067,
+   "storeId": 8,
+   "name": "Protein Powder",
+   "description": "Nutrient-packed protein powder, ideal for supplementing your diet with essential proteins.",
+   "section": "Pantry",
+   "priceCents": 1999,
+   "discountPercent": 7.6,
+   "unit": "2 lb tub",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/protein-powder/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1068,
+   "storeId": 8,
+   "name": "Juice",
+   "description": "Refreshing fruit juice, packed with vitamins and great for staying hydrated.",
+   "section": "Drinks",
+   "priceCents": 399,
+   "discountPercent": 12.1,
+   "unit": "52 fl oz",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/juice/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1069,
+   "storeId": 8,
+   "name": "Soft Drinks",
+   "description": "Assorted soft drinks in various flavors, perfect for refreshing beverages.",
+   "section": "Drinks",
+   "priceCents": 199,
+   "discountPercent": 17.5,
+   "unit": "6 pack",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/soft-drinks/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1070,
+   "storeId": 8,
+   "name": "Water",
+   "description": "Pure and refreshing bottled water, essential for staying hydrated throughout the day.",
+   "section": "Drinks",
+   "priceCents": 99,
+   "discountPercent": 14.9,
+   "unit": "1 gal",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/water/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1071,
+   "storeId": 8,
+   "name": "Tissue Paper Box",
+   "description": "Convenient tissue paper box for everyday use, providing soft and absorbent tissues.",
+   "section": "Household & pets",
+   "priceCents": 249,
+   "discountPercent": 13.3,
+   "unit": "each",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/tissue-paper-box/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1072,
+   "storeId": 8,
+   "name": "Cat Food",
+   "description": "Nutritious cat food formulated to meet the dietary needs of your feline friend.",
+   "section": "Household & pets",
+   "priceCents": 899,
+   "discountPercent": 9.6,
+   "unit": "3 lb bag",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/cat-food/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1073,
+   "storeId": 8,
+   "name": "Dog Food",
+   "description": "Specially formulated dog food designed to provide essential nutrients for your canine companion.",
+   "section": "Household & pets",
+   "priceCents": 1099,
+   "discountPercent": 10.3,
+   "unit": "5 lb bag",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/dog-food/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1074,
+   "storeId": 9,
+   "name": "Ice Cream",
+   "description": "Creamy and delicious ice cream, available in various flavors for a delightful treat.",
+   "section": "Snacks & sweets",
+   "priceCents": 659,
+   "discountPercent": 0.0,
+   "unit": "1 pint",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/ice-cream/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1075,
+   "storeId": 9,
+   "name": "Water",
+   "description": "Pure and refreshing bottled water, essential for staying hydrated throughout the day.",
+   "section": "Drinks",
+   "priceCents": 119,
+   "discountPercent": 0.0,
+   "unit": "1 gal",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/water/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1076,
+   "storeId": 9,
+   "name": "Soft Drinks",
+   "description": "Assorted soft drinks in various flavors, perfect for refreshing beverages.",
+   "section": "Drinks",
+   "priceCents": 239,
+   "discountPercent": 0.0,
+   "unit": "6 pack",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/soft-drinks/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1077,
+   "storeId": 9,
+   "name": "Juice",
+   "description": "Refreshing fruit juice, packed with vitamins and great for staying hydrated.",
+   "section": "Drinks",
+   "priceCents": 479,
+   "discountPercent": 0.0,
+   "unit": "52 fl oz",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/juice/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1078,
+   "storeId": 9,
+   "name": "Nescafe Coffee",
+   "description": "Quality coffee from Nescafe, available in various blends for a rich and satisfying cup.",
+   "section": "Drinks",
+   "priceCents": 959,
+   "discountPercent": 0.0,
+   "unit": "7 oz jar",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/nescafe-coffee/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1079,
+   "storeId": 9,
+   "name": "Milk",
+   "description": "Fresh and nutritious milk, a staple for various recipes and daily consumption.",
+   "section": "Essentials",
+   "priceCents": 419,
+   "discountPercent": 0.0,
+   "unit": "1 gal",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/milk/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1080,
+   "storeId": 9,
+   "name": "Eggs",
+   "description": "Fresh eggs, a versatile ingredient for baking, cooking, or breakfast.",
+   "section": "Essentials",
+   "priceCents": 359,
+   "discountPercent": 0.0,
+   "unit": "dozen",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/eggs/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1081,
+   "storeId": 9,
+   "name": "Tissue Paper Box",
+   "description": "Convenient tissue paper box for everyday use, providing soft and absorbent tissues.",
+   "section": "Essentials",
+   "priceCents": 299,
+   "discountPercent": 0.0,
+   "unit": "each",
+   "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/tissue-paper-box/thumbnail.webp",
+   "calories": null,
+   "tags": []
+  },
+  {
+   "id": 1082,
+   "storeId": 10,
+   "name": "Chocolate Chip Cookies",
+   "description": "Freshly baked, gooey chocolate chip cookie.",
+   "section": "Bakery",
+   "priceCents": 399,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/3.webp",
+   "calories": 150,
+   "tags": [
+    "popular",
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1083,
+   "storeId": 10,
+   "name": "Italian Tiramisu",
+   "description": "Espresso-soaked ladyfingers with mascarpone cream.",
+   "section": "Desserts",
+   "priceCents": 799,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/23.webp",
+   "calories": 350,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1084,
+   "storeId": 10,
+   "name": "Brazilian Chocolate Brigadeiros",
+   "description": "Brazilian chocolate truffles, box of four.",
+   "section": "Desserts",
+   "priceCents": 499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/35.webp",
+   "calories": 120,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1085,
+   "storeId": 10,
+   "name": "Japanese Matcha Green Tea Ice Cream",
+   "description": "Creamy green tea ice cream.",
+   "section": "Desserts",
+   "priceCents": 649,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/34.webp",
+   "calories": 280,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1086,
+   "storeId": 11,
+   "name": "Blueberry Banana Smoothie",
+   "description": "Blueberry, banana and yogurt.",
+   "section": "Smoothies",
+   "priceCents": 699,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/25.webp",
+   "calories": 220,
+   "tags": [
+    "popular",
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1087,
+   "storeId": 11,
+   "name": "Pineapple Coconut Smoothie",
+   "description": "Pineapple, coconut milk and banana.",
+   "section": "Smoothies",
+   "priceCents": 699,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/50.webp",
+   "calories": 200,
+   "tags": [
+    "vegetarian"
+   ]
+  },
+  {
+   "id": 1088,
+   "storeId": 11,
+   "name": "Mango Lassi",
+   "description": "Chilled yogurt drink blended with ripe mango.",
+   "section": "Lassi",
+   "priceCents": 499,
+   "discountPercent": 0.0,
+   "unit": null,
+   "imageUrl": "https://cdn.dummyjson.com/recipe-images/22.webp",
+   "calories": 180,
+   "tags": [
+    "vegetarian"
+   ]
+  }
+ ]
+}

@@ -1,7 +1,9 @@
 package com.sravanthi.quickcart.core.data.di
 
-import com.sravanthi.quickcart.core.data.repository.OfflineFirstProductRepository
-import com.sravanthi.quickcart.core.data.repository.ProductRepository
+import com.sravanthi.quickcart.core.data.repository.OfflineFirstSearchRepository
+import com.sravanthi.quickcart.core.data.repository.OfflineFirstStoreRepository
+import com.sravanthi.quickcart.core.data.repository.SearchRepository
+import com.sravanthi.quickcart.core.data.repository.StoreRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -13,7 +15,10 @@ import java.time.Clock
 @InstallIn(SingletonComponent::class)
 internal abstract class DataModule {
     @Binds
-    abstract fun bindProductRepository(repository: OfflineFirstProductRepository): ProductRepository
+    abstract fun bindStoreRepository(repository: OfflineFirstStoreRepository): StoreRepository
+
+    @Binds
+    abstract fun bindSearchRepository(repository: OfflineFirstSearchRepository): SearchRepository
 
     companion object {
         @Provides

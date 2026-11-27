@@ -8,7 +8,9 @@ android {
     namespace = "com.sravanthi.quickcart.core.network"
     buildFeatures.buildConfig = true
     defaultConfig {
-        buildConfigField("String", "API_BASE_URL", "\"https://dummyjson.com/\"")
+        // The marketplace API. Until a real backend exists, the in-app mock server answers every request.
+        buildConfigField("String", "API_BASE_URL", "\"https://api.quickcart.example/v1/\"")
+        buildConfigField("boolean", "USE_MOCK_MARKETPLACE", "true")
     }
 }
 
@@ -20,5 +22,4 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
 
-    testImplementation(libs.okhttp.mockwebserver)
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_ui_delivery_time">%1$d–%2$d min</string>
+    <string name="core_ui_free_delivery">Free delivery</string>
+    <string name="core_ui_delivery_fee">%1$s delivery</string>
+    <string name="core_ui_store_meta">rated %1$s, %2$s, %3$s</string>
+    <string name="core_ui_closed_opens_at">Closed · Opens %1$s</string>
+    <string name="core_ui_tag_popular">Popular</string>
+    <string name="core_ui_tag_vegetarian">Vegetarian</string>
+    <string name="core_ui_tag_spicy">Spicy</string>
+</resources>

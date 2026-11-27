@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_store_back">Back</string>
+    <string name="feature_store_open_24h">Open 24 hours</string>
+    <string name="feature_store_open_until">Open until %1$s</string>
+    <string name="feature_store_closed_opens">Closed · Opens %1$s</string>
+    <string name="feature_store_minimum">%1$s minimum</string>
+    <string name="feature_store_offline">You\'re offline. Showing the saved menu.</string>
+    <string name="feature_store_retry">Retry</string>
+    <string name="feature_store_error_title">Can\'t load this store</string>
+    <string name="feature_store_error_body">Check your connection and try again.</string>
+</resources>
