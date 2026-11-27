@@ -1,5 +1,6 @@
 package com.sravanthi.quickcart.feature.store
 
+import androidx.compose.ui.platform.testTag
 import androidx.compose.foundation.layout.Arrangement
 import com.sravanthi.quickcart.core.model.MenuItem
 import com.sravanthi.quickcart.core.model.Cart
@@ -129,7 +130,7 @@ private fun StoreContent(
     onAdd: (MenuItem) -> Unit,
     onSetQuantity: (MenuItem, Int) -> Unit,
 ) {
-    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
+    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize().testTag("menu_list")) {
         item { StoreHeader(state.store, state.isOpen) }
         if (state.isRefreshing) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
         if (state.isOffline) item { OfflineBanner(onRetry) }

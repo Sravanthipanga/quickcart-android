@@ -1,5 +1,6 @@
 package com.sravanthi.quickcart.feature.home
 
+import androidx.compose.ui.platform.testTag
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.res.pluralStringResource
@@ -159,7 +160,7 @@ internal fun HomeScreen(
             LazyColumn(
                 contentPadding = PaddingValues(bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().testTag("store_list"),
             ) {
                 item { SearchBarButton(onSearchClick) }
                 item { FilterChips(selectedType, onTypeSelected) }
@@ -227,6 +228,7 @@ private fun SearchBarButton(onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
+            .testTag("search_button")
             .semantics { role = Role.Button },
     ) {
         Row(Modifier.padding(horizontal = 16.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {

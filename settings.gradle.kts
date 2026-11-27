@@ -20,6 +20,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "quickcart"
 
 include(":app")
+include(":baselineprofile")
 include(":core:model")
 include(":core:network")
 include(":core:database")
