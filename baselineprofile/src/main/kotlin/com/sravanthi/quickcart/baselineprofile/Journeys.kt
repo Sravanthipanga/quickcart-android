@@ -3,6 +3,7 @@ package com.sravanthi.quickcart.baselineprofile
 import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Direction
+import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 
 /** Package of the app under test (the benchmark build type has no suffix). */
@@ -12,42 +13,45 @@ private const val TIMEOUT_MS = 10_000L
 
 /**
  * The paths users take most: these are profiled so they run compiled from the first launch,
- * and measured by the benchmarks. Each step waits for the screen it needs, so slow devices
- * don't cause flaky failures.
+ * and measured by the benchmarks.
+ *
+ * Views are looked up fresh before every action: Compose replaces accessibility nodes as the
+ * screen updates (e.g. when the next page of stores loads), so a node found earlier can go stale.
  */
+private fun MacrobenchmarkScope.find(tag: String): UiObject2 =
+    checkNotNull(device.wait(Until.findObject(By.res(tag)), TIMEOUT_MS)) { "\"$tag\" not on screen" }
+
+private fun MacrobenchmarkScope.fling(tag: String, direction: Direction) {
+    val list = find(tag)
+    // Keep the fling away from the screen edges so it doesn't trigger system gestures.
+    list.setGestureMargin(device.displayWidth / 5)
+    list.fling(direction)
+    device.waitForIdle()
+}
+
 fun MacrobenchmarkScope.waitForStores() {
-    check(device.wait(Until.hasObject(By.res("store_card")), TIMEOUT_MS)) { "Store list didn't load" }
+    find("store_card")
 }
 
 fun MacrobenchmarkScope.scrollStores() {
-    val list = device.findObject(By.res("store_list"))
-    // Keep the fling away from the edge so it doesn't trigger system gestures.
-    list.setGestureMargin(device.displayWidth / 5)
-    repeat(2) {
-        list.fling(Direction.DOWN)
-        device.waitForIdle()
-    }
-    list.fling(Direction.UP)
-    device.waitForIdle()
+    fling("store_list", Direction.DOWN)
+    fling("store_list", Direction.DOWN)
+    fling("store_list", Direction.UP)
 }
 
 fun MacrobenchmarkScope.openFirstStoreAndScrollMenu() {
-    device.findObject(By.res("store_card")).click()
-    check(device.wait(Until.hasObject(By.res("menu_list")), TIMEOUT_MS)) { "Store menu didn't open" }
-    val menu = device.findObject(By.res("menu_list"))
-    menu.setGestureMargin(device.displayWidth / 5)
-    menu.fling(Direction.DOWN)
-    device.waitForIdle()
+    find("store_card").click()
+    fling("menu_list", Direction.DOWN)
     device.pressBack()
     waitForStores()
 }
 
 fun MacrobenchmarkScope.searchFor(query: String) {
-    device.findObject(By.res("search_button")).click()
-    check(device.wait(Until.hasObject(By.res("search_field")), TIMEOUT_MS)) { "Search didn't open" }
-    device.findObject(By.res("search_field")).text = query
-    check(device.wait(Until.hasObject(By.res("search_results")), TIMEOUT_MS)) { "No search results" }
+    find("search_button").click()
+    find("search_field").text = query
+    find("search_results")
     device.pressBack() // hide the keyboard
-    device.pressBack()
+    device.waitForIdle()
+    if (!device.hasObject(By.res("store_list"))) device.pressBack()
     waitForStores()
 }

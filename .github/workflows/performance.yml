@@ -14,6 +14,10 @@ concurrency:
   group: performance-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  # Lets the job commit a freshly generated baseline profile to the pull request branch.
+  contents: write
+
 jobs:
   benchmarks:
     name: Baseline profile and benchmarks
@@ -21,6 +25,9 @@ jobs:
     timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The branch itself (not the merge commit), so the profile can be committed back to it.
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
       - uses: actions/setup-java@v4
         with:
@@ -44,6 +51,19 @@ jobs:
           -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect
           -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
           --no-configuration-cache
+
+      - name: Commit the baseline profile to the pull request
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/src/release/generated/baselineProfiles
+          if git diff --cached --quiet; then
+            echo "Baseline profile unchanged"
+          else
+            git commit -m "Update baseline profile"
+            git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+          fi
 
       - name: Run startup and scroll benchmarks
         run: >
