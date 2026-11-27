@@ -15,6 +15,7 @@ dependencies {
     implementation(projects.core.database)
     implementation(libs.androidx.room.ktx)
     implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)

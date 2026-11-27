@@ -1,11 +1,16 @@
 package com.sravanthi.quickcart.core.network.mock
 
+import com.sravanthi.quickcart.core.model.priceOrder
+import com.sravanthi.quickcart.core.network.model.NetworkError
 import com.sravanthi.quickcart.core.network.model.NetworkMenu
 import com.sravanthi.quickcart.core.network.model.NetworkMenuItem
+import com.sravanthi.quickcart.core.network.model.NetworkOrderConfirmation
+import com.sravanthi.quickcart.core.network.model.NetworkOrderRequest
 import com.sravanthi.quickcart.core.network.model.NetworkSearchHit
 import com.sravanthi.quickcart.core.network.model.NetworkSearchResults
 import com.sravanthi.quickcart.core.network.model.NetworkStore
 import com.sravanthi.quickcart.core.network.model.NetworkStorePage
+import com.sravanthi.quickcart.core.network.model.asExternalModel
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -15,6 +20,9 @@ import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
+import okio.Buffer
+import java.time.LocalTime
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * A mock marketplace server inside the app: answers [com.sravanthi.quickcart.core.network.MarketplaceApi]
@@ -26,12 +34,15 @@ class MockMarketplaceInterceptor(
     private val loadData: () -> String,
     private val json: Json,
     private val latencyMillis: Long = 300,
+    /** The server's clock, for opening hours. */
+    private val now: () -> LocalTime = { LocalTime.now() },
 ) : Interceptor {
 
     @Serializable
     private data class MarketplaceData(val stores: List<NetworkStore>, val items: List<NetworkMenuItem>)
 
     private val data: MarketplaceData by lazy { json.decodeFromString(loadData()) }
+    private val nextOrderNumber = AtomicInteger(FIRST_ORDER_NUMBER)
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
@@ -47,6 +58,7 @@ class MockMarketplaceInterceptor(
                 ?.let { respond(request, json.encodeToString(NetworkMenu(data.items.filter { i -> i.storeId == it.id }))) }
                 ?: notFound(request)
             path == listOf("search") -> respond(request, json.encodeToString(search(request.url.queryParameter("q").orEmpty())))
+            path == listOf("orders") && request.method == "POST" -> placeOrder(request)
             else -> notFound(request)
         }
     }
@@ -72,19 +84,57 @@ class MockMarketplaceInterceptor(
         return NetworkSearchResults(stores, items)
     }
 
+    /**
+     * Validates and prices an order the way a real backend would: prices come from the server's data,
+     * never from the client.
+     */
+    private fun placeOrder(request: Request): Response {
+        val body = Buffer().also { request.body?.writeTo(it) }.readUtf8()
+        val order = runCatching { json.decodeFromString<NetworkOrderRequest>(body) }.getOrNull()
+            ?: return error(request, 400, "Invalid order")
+        val store = data.stores.firstOrNull { it.id == order.storeId } ?: return error(request, 404, "Store not found")
+        val storeModel = store.asExternalModel()
+        if (!storeModel.isOpenAt(now())) return error(request, 409, "${store.name} is closed right now")
+        if (order.lines.isEmpty() || order.lines.any { it.quantity <= 0 }) return error(request, 400, "Invalid order")
+
+        val subtotal = order.lines.sumOf { line ->
+            val item = data.items.firstOrNull { it.id == line.itemId && it.storeId == store.id }
+                ?: return error(request, 400, "An item is no longer available")
+            item.asExternalModel().salePriceCents * line.quantity
+        }
+        val pricing = priceOrder(subtotal, storeModel)
+        if (!pricing.meetsMinimum) return error(request, 422, "Orders from ${store.name} need a minimum subtotal")
+
+        val confirmation = NetworkOrderConfirmation(
+            orderId = "QC-${nextOrderNumber.getAndIncrement()}",
+            storeName = store.name,
+            subtotalCents = pricing.subtotalCents,
+            deliveryFeeCents = pricing.deliveryFeeCents,
+            serviceFeeCents = pricing.serviceFeeCents,
+            minimumOrderCents = pricing.minimumOrderCents,
+            etaMinMinutes = store.deliveryMinMinutes,
+            etaMaxMinutes = store.deliveryMaxMinutes,
+        )
+        return respond(request, json.encodeToString(confirmation), code = 201)
+    }
+
+    private fun error(request: Request, code: Int, message: String) =
+        respond(request, json.encodeToString(NetworkError(message)), code)
+
     private fun respond(request: Request, body: String, code: Int = 200) = Response.Builder()
         .request(request)
         .protocol(Protocol.HTTP_1_1)
         .code(code)
-        .message(if (code == 200) "OK" else "Not Found")
+        .message(if (code < 300) "OK" else "Error")
         .body(body.toResponseBody(JSON))
         .build()
 
-    private fun notFound(request: Request) = respond(request, """{"message":"Not found"}""", code = 404)
+    private fun notFound(request: Request) = error(request, 404, "Not found")
 
     companion object {
         const val MIN_QUERY_LENGTH = 2
         const val MAX_ITEM_RESULTS = 40
+        private const val FIRST_ORDER_NUMBER = 1042
         private val JSON = "application/json".toMediaType()
     }
 }

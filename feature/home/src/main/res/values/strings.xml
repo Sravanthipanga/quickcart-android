@@ -15,4 +15,8 @@
     <string name="feature_home_load_more_failed">Couldn\'t load more stores. Tap to retry</string>
     <string name="feature_home_error_title">Can\'t reach QuickCart</string>
     <string name="feature_home_error_body">Check your connection and try again. Stores you\'ve browsed will be saved for offline use.</string>
+    <plurals name="feature_home_cart">
+        <item quantity="one">Cart, %1$d item</item>
+        <item quantity="other">Cart, %1$d items</item>
+    </plurals>
 </resources>

@@ -1,6 +1,12 @@
 package com.sravanthi.quickcart.feature.store
 
 import androidx.compose.foundation.layout.Arrangement
+import com.sravanthi.quickcart.core.model.MenuItem
+import com.sravanthi.quickcart.core.model.Cart
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -51,15 +57,48 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 @Composable
-internal fun StoreRoute(onBack: () -> Unit, viewModel: StoreViewModel = hiltViewModel()) {
+internal fun StoreRoute(onBack: () -> Unit, onViewCart: () -> Unit, viewModel: StoreViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    StoreScreen(uiState, onBack = onBack, onRetry = viewModel::refresh)
+    StoreScreen(
+        uiState = uiState,
+        onBack = onBack,
+        onRetry = viewModel::refresh,
+        onAdd = viewModel::add,
+        onSetQuantity = viewModel::setQuantity,
+        onViewCart = onViewCart,
+        onConfirmSwitch = viewModel::confirmSwitch,
+        onDismissSwitch = viewModel::dismissSwitch,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun StoreScreen(uiState: StoreUiState, onBack: () -> Unit, onRetry: () -> Unit) {
+internal fun StoreScreen(
+    uiState: StoreUiState,
+    onBack: () -> Unit,
+    onRetry: () -> Unit,
+    onAdd: (MenuItem) -> Unit = {},
+    onSetQuantity: (MenuItem, Int) -> Unit = { _, _ -> },
+    onViewCart: () -> Unit = {},
+    onConfirmSwitch: () -> Unit = {},
+    onDismissSwitch: () -> Unit = {},
+) {
+    (uiState as? StoreUiState.Ready)?.pendingSwitch?.let { switch ->
+        AlertDialog(
+            onDismissRequest = onDismissSwitch,
+            title = { Text(stringResource(R.string.feature_store_switch_title)) },
+            text = {
+                Text(stringResource(R.string.feature_store_switch_body, switch.currentStoreName, uiState.store.name))
+            },
+            confirmButton = { TextButton(onClick = onConfirmSwitch) { Text(stringResource(R.string.feature_store_switch_confirm)) } },
+            dismissButton = { TextButton(onClick = onDismissSwitch) { Text(stringResource(R.string.feature_store_switch_cancel)) } },
+        )
+    }
     Scaffold(
+        bottomBar = {
+            val cart = (uiState as? StoreUiState.Ready)?.cart
+            if (cart != null && !cart.isEmpty) ViewCartBar(cart, onViewCart)
+        },
         topBar = {
             TopAppBar(
                 title = {
@@ -77,14 +116,19 @@ internal fun StoreScreen(uiState: StoreUiState, onBack: () -> Unit, onRetry: () 
             when (uiState) {
                 StoreUiState.Loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
                 StoreUiState.Error -> ErrorState(onRetry, Modifier.align(Alignment.Center))
-                is StoreUiState.Ready -> StoreContent(uiState, onRetry)
+                is StoreUiState.Ready -> StoreContent(uiState, onRetry, onAdd, onSetQuantity)
             }
         }
     }
 }
 
 @Composable
-private fun StoreContent(state: StoreUiState.Ready, onRetry: () -> Unit) {
+private fun StoreContent(
+    state: StoreUiState.Ready,
+    onRetry: () -> Unit,
+    onAdd: (MenuItem) -> Unit,
+    onSetQuantity: (MenuItem, Int) -> Unit,
+) {
     LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
         item { StoreHeader(state.store, state.isOpen) }
         if (state.isRefreshing) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
@@ -100,7 +144,13 @@ private fun StoreContent(state: StoreUiState.Ready, onRetry: () -> Unit) {
                 )
             }
             items(items, key = { it.id }) { item ->
-                MenuItemRow(item)
+                val quantity = state.cart.quantityOf(item.id)
+                MenuItemRow(
+                    item = item,
+                    quantity = quantity,
+                    onIncrease = { if (quantity == 0) onAdd(item) else onSetQuantity(item, quantity + 1) },
+                    onDecrease = { onSetQuantity(item, quantity - 1) },
+                )
                 HorizontalDivider(Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outlineVariant)
             }
         }
@@ -144,6 +194,25 @@ private fun StoreHeader(store: Store, isOpen: Boolean) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun ViewCartBar(cart: Cart, onViewCart: () -> Unit) {
+    Surface(shadowElevation = 8.dp, color = MaterialTheme.colorScheme.surfaceContainer) {
+        Button(
+            onClick = onViewCart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+        ) {
+            Text(
+                pluralStringResource(R.plurals.feature_store_view_cart, cart.itemCount, cart.itemCount),
+                modifier = Modifier.weight(1f),
+            )
+            Text(formatPrice(cart.subtotalCents), fontWeight = FontWeight.Bold)
         }
     }
 }

@@ -85,3 +85,33 @@ fun NetworkMenuItem.asExternalModel() = MenuItem(
     calories = calories,
     tags = tags.mapNotNull { tag -> ItemTag.entries.firstOrNull { it.name.equals(tag, ignoreCase = true) } }.toSet(),
 )
+
+@Serializable
+data class NetworkOrderRequest(val storeId: Long, val lines: List<NetworkOrderLine>)
+
+@Serializable
+data class NetworkOrderLine(val itemId: Long, val quantity: Int)
+
+@Serializable
+data class NetworkOrderConfirmation(
+    val orderId: String,
+    val storeName: String,
+    val subtotalCents: Long,
+    val deliveryFeeCents: Long,
+    val serviceFeeCents: Long,
+    val minimumOrderCents: Long,
+    val etaMinMinutes: Int,
+    val etaMaxMinutes: Int,
+)
+
+/** The error body the API returns with 4xx responses. */
+@Serializable
+data class NetworkError(val message: String)
+
+fun NetworkOrderConfirmation.asExternalModel() = com.sravanthi.quickcart.core.model.OrderConfirmation(
+    orderId = orderId,
+    storeName = storeName,
+    pricing = com.sravanthi.quickcart.core.model.OrderPricing(subtotalCents, deliveryFeeCents, serviceFeeCents, minimumOrderCents),
+    etaMinMinutes = etaMinMinutes,
+    etaMaxMinutes = etaMaxMinutes,
+)

@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.store)
     implementation(projects.feature.search)
+    implementation(projects.feature.cart)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

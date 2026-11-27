@@ -8,4 +8,8 @@
     <string name="core_ui_tag_popular">Popular</string>
     <string name="core_ui_tag_vegetarian">Vegetarian</string>
     <string name="core_ui_tag_spicy">Spicy</string>
+    <string name="core_ui_add_item">Add %1$s to cart</string>
+    <string name="core_ui_increase_item">One more %1$s</string>
+    <string name="core_ui_decrease_item">One less %1$s</string>
+    <string name="core_ui_remove_item">Remove %1$s from cart</string>
 </resources>

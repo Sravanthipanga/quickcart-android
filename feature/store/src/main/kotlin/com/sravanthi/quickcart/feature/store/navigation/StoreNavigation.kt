@@ -12,11 +12,11 @@ private const val STORE_ROUTE = "store"
 
 fun NavController.navigateToStore(storeId: Long) = navigate("$STORE_ROUTE/$storeId")
 
-fun NavGraphBuilder.storeScreen(onBack: () -> Unit) {
+fun NavGraphBuilder.storeScreen(onBack: () -> Unit, onViewCart: () -> Unit) {
     composable(
         route = "$STORE_ROUTE/{$STORE_ID_ARG}",
         arguments = listOf(navArgument(STORE_ID_ARG) { type = NavType.LongType }),
     ) {
-        StoreRoute(onBack = onBack)
+        StoreRoute(onBack = onBack, onViewCart = onViewCart)
     }
 }
